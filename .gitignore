@@ -1,0 +1,32 @@
+# cache directories
+Thumbs.db
+*.DS_Store
+*.empty
+
+#phpstorm project files
+.idea
+
+#netbeans project files
+nbproject
+
+#eclipse, zend studio, aptana or other eclipse like project files
+.buildpath
+.project
+.settings
+
+# sass cache files
+*.sass-cache
+
+# mac deployment helpers
+switch
+index
+
+# use
+tmp
+temp/*
+lib/_old
+lib/mails
+templates/_old
+/mailparser.log
+/mailparser_error.log
+/appinfo/config.php
