@@ -45,6 +45,85 @@ class Users
     }
 
 
+    public function getResourcesOwncollab()
+    {
+        $groupsUsers = ['users'=>[],'groups'=>[]];
+        $resGroupsUsers = $this->connect->queryAll("SELECT users FROM *PREFIX*collab_tasks");
+        if ($resGroupsUsers) {
+            for ($i = 0; $i < count($resGroupsUsers); $i++) {
+                if (!empty($resGroupsUsers[$i]['users'])) {
+                    try {
+                        $gu = json_decode($resGroupsUsers[$i]['users'], true);
+
+                        if(!empty($gu['users']))
+                            $groupsUsers['users'] = array_merge($groupsUsers['users'], $gu['users']);
+
+                        if(!empty($gu['groups']))
+                            $groupsUsers['groups'] = array_merge($groupsUsers['groups'], $gu['groups']);
+
+                    } catch (\Exception $e) {
+                    }
+                }
+            }
+        }
+        return $groupsUsers['users'] || $groupsUsers['groups'] ? $groupsUsers : null;
+    }
+
+    public function getResourcesOwncollabAllUsersOnly()
+    {
+        $uids = [];
+        $gu = $this->getResourcesOwncollab();
+
+        if($gu) {
+            $uids = !empty($gu['users']) ? $gu['users'] : [];
+            if(!empty($gu['groups'])) {
+                $ins =  "'" . join("', '", $gu['groups']) . "'";
+                $sql = "SELECT u.uid
+                        FROM oc_users u
+                        LEFT JOIN oc_group_user gu ON (gu.uid = u.uid)
+                        WHERE gu.gid IN ($ins);";
+                $result = $this->connect->queryAll($sql);
+                if($result)
+                    $uids = array_merge(array_map(function ($rec) { return $rec['uid']; }, $result), $gu['users']);
+            }
+        }
+
+        return array_unique($uids);
+    }
+
+
+    public function getAllIn($ids)
+    {
+        $ins =  "'" . join("', '", $ids) . "'";
+        $sql = "SELECT
+                    u.uid,
+                    u.displayname,
+                    gu.gid,
+                    p.configvalue as email
+                FROM oc_users u
+                LEFT JOIN oc_group_user gu ON (gu.uid = u.uid)
+                LEFT JOIN oc_preferences p ON (p.userid = u.uid AND appid = 'settings' AND configkey = 'email')
+                WHERE u.uid IN ($ins)";
+
+        $resultFormatted = [];
+        $result = $this->connect->queryAll($sql);
+        if($result) {
+            foreach($result as $rec) {
+                if(isset($resultFormatted[$rec['uid']])) {
+                    $resultFormatted[$rec['uid']]['gid'][] = $rec['gid'];
+                } else {
+                    $resultFormatted[$rec['uid']] = $rec;
+                    if(!is_array($resultFormatted[$rec['uid']]['gid']))
+                        $resultFormatted[$rec['uid']]['gid'] = [];
+                    $resultFormatted[$rec['uid']]['gid'][] = $rec['gid'];
+                }
+            }
+        }
+
+        return $resultFormatted;
+    }
+
+
     /**
      * @param $id
      * @return mixed
@@ -151,10 +230,7 @@ class Users
         return $usersData;
     }
 
-    public function getUngroupUsersList($refresh = false)
-    {
-
-    }
+    public function getUngroupUsersList($refresh = false) {}
 
 
 

@@ -69,3 +69,25 @@
 .valign_top{vertical-align:top}
 .select_off{-webkit-user-select: none; -moz-user-select: none; user-select: none}
 strong{font-weight: bold;}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+#users_list{}
+#users_list .tbl.ul_header{}
+#users_list .tbl.ul_header>.tbl_cell{
+    width: 25%;
+    font-weight: bold;
+    line-height: 30px;
+    border-bottom: 1px solid #eee;
+    padding-top: 10px;
+    padding-left: 10px;
+    text-align: left;
+    color: #999;
+}
+#users_list .tbl.ul_item{}
+#users_list .tbl.ul_item>.tbl_cell{
+    width: 25%;
+    line-height: 30px;
+    padding-left: 10px;
+    border-bottom: 1px solid #eee;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

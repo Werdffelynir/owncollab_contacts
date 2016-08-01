@@ -98,10 +98,18 @@ class MainController extends Controller
      */
     public function showList()
     {
+        //$r = $this->connect->users()->getResourcesOwncollab();
+        //var_dump($usersProject);
+        //var_dump($ruo);
+        //exit;
+
+        $ruo = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
+        $projectUsers = $this->connect->users()->getAllIn($ruo);
 
         $data = [
             'menu' => 'begin',
             'content' => 'list',
+            'projectUsers' => $projectUsers,
         ];
 
         return new TemplateResponse($this->appName, 'main', $data);

@@ -5,8 +5,7 @@ namespace OCA\Owncollab_Contacts\Controller;
 use OC\Files\Filesystem;
 use OCA\Owncollab_Contacts\Helper;
 use OCA\Owncollab_Contacts\Db\Connect;
-use OCA\Owncollab_Contacts\PHPMailer\PHPMailer;
-use OCA\Owncollab_Contacts\TalkMail;
+use OCA\Owncollab_Contacts\vCard;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\Files;
 use OCP\IRequest;
@@ -31,7 +30,7 @@ class ApiController extends Controller {
      * @param IRequest $request
      * @param $userId
      * @param $isAdmin
-     * @param \OC_L10N $l10n
+     * @param $l10n
      * @param Connect $connect
      */
     public function __construct(
@@ -39,7 +38,7 @@ class ApiController extends Controller {
         IRequest $request,
         $userId,
         $isAdmin,
-        \OC_L10N $l10n,
+        $l10n,
         Connect $connect
     ){
         parent::__construct($appName, $request);
@@ -62,12 +61,6 @@ class ApiController extends Controller {
         $pid = Helper::post('pid');
         $uid = Helper::post('uid');
 
-        // added base needed params global static object
-        Helper::val([
-            'userId'  => $this->userId,
-            'appName' => $this->appName,
-        ]);
-
         if(method_exists($this, $key)) {
             return $this->$key($data);
         } else
@@ -85,5 +78,24 @@ class ApiController extends Controller {
         return new DataResponse($data);
     }
 
+    public function getvcard() {
 
+        $ruo = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
+        $projectUsers = $this->connect->users()->getAllIn($ruo);
+
+        $vcard = new vCard();
+
+        $vcard->set('data', [
+            'display_name' 	=> 'Vasia Vasilev',
+            'first_name' 	=> 'Vasia',
+            'last_name' 	=> 'Vasilev',
+            'role' 			=> 'Manager',
+            'email1' 		=> 'manager@admin.com',
+            'office_tel'	=> '+0123456789',
+            'company' 		=> 'My Company',
+        ]);
+
+        $vcard->download();
+        exit;
+    }
 }

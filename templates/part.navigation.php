@@ -9,7 +9,5 @@
 ?>
 
 <ul>
-    <li>menu</li>
-    <li>menu</li>
-    <li>menu</li>
+    <li>&nbsp;</li>
 </ul>
