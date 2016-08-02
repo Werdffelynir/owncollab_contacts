@@ -242,4 +242,5 @@ class vCard
         return $this->card;
     }
 
+
 }

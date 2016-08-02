@@ -22,10 +22,9 @@ $valIn = function ($key) use ($userContacts) {
     return '';
 };
 
-//var_dump($valIn('first_name'));
-//var_dump($valIn('last_name'));
-//var_dump($valIn('office_tel'));
-//var_dump($valIn('home_tel'));
+/*
+
+ * */
 ?>
 
 <div class="vcontact">

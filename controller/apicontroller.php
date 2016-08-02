@@ -79,24 +79,37 @@ class ApiController extends Controller {
         return new DataResponse($data);
     }
 
+
     public function getvcard()
     {
-        $ruo = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
-        $projectUsers = $this->connect->users()->getAllIn($ruo);
+        $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
+//        $projectUsers = $this->connect->users()->getAllIn($ruo);
 
-        $vcard = new vCard();
+        // запрос выбрать необходимые данные по каждому ИД
+        // в цикле сгенерировать vCard объекты
 
-        $vcard->set('data', [
-            'display_name' 	=> 'Vasia Vasilev',
-            'first_name' 	=> 'Vasia',
-            'last_name' 	=> 'Vasilev',
-            'role' 			=> 'Manager',
-            'email1' 		=> 'manager@admin.com',
-            'office_tel'	=> '+0123456789',
-            'company' 		=> 'My Company',
-        ]);
+        $vCardData = '';
 
-        $vcard->download();
+        foreach($resIds as $as){
+
+            $vcard = new vCard();
+
+            $vcard->set('data', [
+                'first_name' 	=> 'Vasia',
+                'last_name' 	=> 'Vasilev',
+                'display_name' 	=> 'Vasia Vasilev',
+                'email1' 		=> 'manager@admin.com',
+                'office_tel'	=> '+0123456789',
+                'home_tel' 		=> 'My Company',
+            ]);
+
+            $vCardData .= $vcard->show();
+
+
+        }
+
+        // $vCardData
+
         exit;
     }
 

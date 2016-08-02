@@ -103,8 +103,9 @@ class MainController extends Controller
         //var_dump($ruo);
         //exit;
 
-        $ruo = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
-        $projectUsers = $this->connect->users()->getAllIn($ruo);
+        $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
+        $projectUsers = $this->connect->users()->getAllIn($resIds);
+
         $userContacts = $this->connect->users()->getUserContacts($this->userId);
 
         $data = [
