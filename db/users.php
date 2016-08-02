@@ -99,10 +99,18 @@ class Users
                     u.uid,
                     u.displayname,
                     gu.gid,
-                    p.configvalue as email
+                    p.configvalue as email,
+                    p2.configvalue as first_name,
+                    p3.configvalue as last_name,
+                    p4.configvalue as office_tel,
+                    p5.configvalue as home_tel
                 FROM oc_users u
                 LEFT JOIN oc_group_user gu ON (gu.uid = u.uid)
-                LEFT JOIN oc_preferences p ON (p.userid = u.uid AND appid = 'settings' AND configkey = 'email')
+                LEFT JOIN oc_preferences p ON ( p.userid = u.uid AND p.appid = 'settings' AND p.configkey = 'email')
+                LEFT JOIN oc_preferences p2 ON ( p2.userid = u.uid AND p2.appid = 'owncollab_contacts' AND p2.configkey = 'first_name')
+                LEFT JOIN oc_preferences p3 ON ( p3.userid = u.uid AND p3.appid = 'owncollab_contacts' AND p3.configkey = 'last_name')
+                LEFT JOIN oc_preferences p4 ON ( p4.userid = u.uid AND p4.appid = 'owncollab_contacts' AND p4.configkey = 'office_tel')
+                LEFT JOIN oc_preferences p5 ON ( p5.userid = u.uid AND p5.appid = 'owncollab_contacts' AND p5.configkey = 'home_tel')
                 WHERE u.uid IN ($ins)";
 
         $resultFormatted = [];
