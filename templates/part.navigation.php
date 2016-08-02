@@ -6,14 +6,6 @@
 
 $userContacts = !empty($_['userContacts']) && is_array($_['userContacts']) ? $_['userContacts'] : [];
 
-/*Table: oc_preferences
-Columns:
-userid	varchar(64) PK
-appid	varchar(32) PK
-configkey	varchar(64) PK
-configvalue	longtext*/
-// if(!empty($userContacts[''])) echo $userContacts['']
-
 $valIn = function ($key) use ($userContacts) {
     foreach ($userContacts as $cont)
         if($cont['configkey'] == $key) {
@@ -22,9 +14,6 @@ $valIn = function ($key) use ($userContacts) {
     return '';
 };
 
-/*
-
- * */
 ?>
 
 <div class="vcontact">
@@ -71,22 +60,3 @@ $valIn = function ($key) use ($userContacts) {
     </div>
 </div>
 
-
-
-
-<div id="app-settings">
-    <div id="app-settings-header">
-        <button class="settings-button" data-apps-slide-toggle="#app-settings-content">
-            Настройки			</button>
-    </div>
-    <div id="app-settings-content" style="display: none;">
-        <div class="download_button">
-            <a href="owncollab_contacts/getvcard" target="_blank" class="icon-download">Export contacts</a>
-        </div>
-        <h2>
-            <label for="webdavurl">WebDAV</label>
-        </h2>
-        <input id="webdavurl" readonly="readonly" value="http://13-59.skconsulting.cc.colocall.com/remote.php/webdav/" type="text">
-        <em>Используйте этот адрес для <a href="https://doc.owncloud.org/server/8.2/go.php?to=user-webdav" target="_blank">доступа файлам через WebDAV</a></em>
-    </div>
-</div>

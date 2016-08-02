@@ -26,14 +26,13 @@ $container = $app->getContainer();
  */
 $container->query('OCP\INavigationManager')->add(function () use ($container, $appName) {
 	$urlGenerator = $container->query('OCP\IURLGenerator');
-	//$l10n = $container->query('OCP\IL10N');
-	$l = \OC::$server->getL10N($appName);
+    $l10n = \OC::$server->getL10N($appName);
 	return [
 		'id' => $appName,
 		'order' => 10,
 		'href' => $urlGenerator->linkToRoute($appName.'.main.index'),
 		'icon' => $urlGenerator->imagePath($appName, 'app.svg'),
-		'name' => $l->t('Contacts')
+		'name' => $l10n->t('Contacts')
 	];
 });
 
@@ -53,40 +52,3 @@ if(Helper::isAppPage($appName)) {
 	Util::addScript($appName, 'libs/ns.application');
 	Util::addScript($appName, 'application/init');
 }
-
-
-/**
- * Detect and appoints styles and scripts for particular app page
- */
-$currentUri = Helper::getCurrentUri($appName);
-if($currentUri == '/') {}
-
-/**
-* Set timezone to 'Berlin' 
-* It must be set in the ownCloud config 
-*/
-
-/**
- * Checking and saving the files send by email
- */
-
-/*\OCP\API::register(
-	'get',
-	'/apps/owncollab_contacts/c',
-	function($urlParameters) {
-		$data = ['a'=>'b'];
-		var_dump($data);
-		return new \OC_OCS_Result($data);
-	},
-	'owncollab_contacts',
-	\OCP\API::ADMIN_AUTH
-);*/
-
-/*
-http://owncloud9.loc/index.php/apps/calendar/
-
-http://owncloud9.loc/index.php/apps/owncollab_contacts/remote/{path}
-
-http://owncloud9.loc/index.php/apps/owncollab_contacts/c
-
-*/

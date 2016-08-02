@@ -23,11 +23,9 @@ $application = new \OCA\Owncollab_Contacts\AppInfo\Application();
 $application->registerRoutes($this, ['routes' => [
 
     ['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
+    ['name' => 'main#publicgetvcard', 'url' => '/vcard', 'verb' => 'GET'],
     ['name' => 'main#getvcard', 'url' => '/getvcard', 'verb' => 'GET'],
-
     ['name' => 'api#index', 'url' => '/api', 'verb' => 'POST'],
-
-//    ['name' => 'contactsapi#preflighted_cors', 'url' => '/remote/{path}', 'verb' => 'GET', 'requirements' => ['path' => '.+']],
 
 ]]);
 

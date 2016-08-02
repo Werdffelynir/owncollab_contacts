@@ -9,6 +9,8 @@ class ContactsApiController extends ApiController {
 
     public function __construct($appName, IRequest $request) {
 
+
+//    ['name' => 'contactsapi#preflighted_cors', 'url' => '/remote/{path}', 'verb' => 'GET', 'requirements' => ['path' => '.+']],
         parent::__construct(
             $appName,
             $request,
