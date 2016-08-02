@@ -44,10 +44,10 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
 
         for (key in formDataObj) {
             //console.log('before>>>', formDataObj);
-            if(formDataObj[key].length > 2){
-                App.Action.Api.request('addcontacts', function(response){
-                    //console.log('response>>>', response);
-                    if(response['error']) {} else {
+            if (formDataObj[key].length > 2) {
+                App.Action.Api.request('addcontacts', function(response) {
+                    console.log('response>>>', response);
+                    if(Util.isEmpty(response['error'])) {
                         //target.parentNode.style.display = 'none';
                         jQuery(callBtn).removeClass('ico_loader');
                         jQuery(callBtn).addClass('ico_add');

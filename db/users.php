@@ -273,6 +273,7 @@ configvalue	longtext*/
                 ["configvalue" => $value], "userid = ? AND appid = 'owncollab_contacts' AND configkey = ?",
                 [$uid, $key]
             );
+
         }else{
             $this->connect->insert($tbl,[
                 'userid' => $uid,
@@ -280,7 +281,7 @@ configvalue	longtext*/
                 'configkey' => $key,
                 'configvalue' => $value,
             ]);
-            return $this->connect->db->lastInsertId($tbl);
+            return $this->connect->db->errorCode() == '00000' ? true : false;
         }
     }
 
