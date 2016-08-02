@@ -18,6 +18,8 @@ class vCard
     // The vCard gnerated.
     protected $card;
 
+
+
     /**
      * The constructor.
      */

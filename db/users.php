@@ -232,6 +232,42 @@ class Users
 
     public function getUngroupUsersList($refresh = false) {}
 
+/*Table: oc_preferences
+Columns:
+userid	varchar(64) PK
+appid	varchar(32) PK
+configkey	varchar(64) PK
+configvalue	longtext*/
+
+    public function updateUserEmail($uid, $email)
+    {
+        return $this->connect->update('*PREFIX*preferences',
+            ["configvalue" => $email], "userid = ? AND appid = 'settings' AND configkey = 'email'",
+            [$uid]
+        );
+    }
+
+    public function insertOrUpdateUserContact($uid, $key, $value)
+    {
+        $tbl = '*PREFIX*preferences';
+        $select = $this->connect->select('*', $tbl, "userid = ? AND appid = 'owncollab_contacts' AND configkey = ?",
+            [$uid, $key]);
+
+        if($select) {
+            return $this->connect->update($tbl,
+                ["configvalue" => $value], "userid = ? AND appid = 'owncollab_contacts' AND configkey = ?",
+                [$uid, $key]
+            );
+        }else{
+            $this->connect->insert($tbl,[
+                'userid' => $uid,
+                'appid' => 'owncollab_contacts',
+                'configkey' => $key,
+                'configvalue' => $value,
+            ]);
+            return $this->connect->db->lastInsertId($tbl);
+        }
+    }
 
 
 }

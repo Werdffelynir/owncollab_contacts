@@ -16,6 +16,8 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
         _.node['contentInlineError'] = App.query('#app-content-inline-error');
         _.errorLineCloseButtonInit();
 
+        App.Action.Sidebar.init();
+
     }
 
     /**

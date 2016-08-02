@@ -91,3 +91,96 @@ strong{font-weight: bold;}
     border-bottom: 1px solid #eee;
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.vcontact{}
+.ico_add{
+    background-image: url("/apps/owncollab_contacts/img/add.png");
+    padding-left: 44px;
+    background-size: 16px 16px;
+    background-position: 14px center;
+    background-repeat: no-repeat;
+}
+.add_vcontact{
+    display: block;
+    width: 100%;
+    line-height: 44px;
+    min-height: 44px;
+    padding: auto 12px;
+    overflow: hidden;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #000;
+    opacity: .57;
+    cursor: pointer;
+}
+
+.add_vcontact:hover{
+    opacity: .99;
+}
+
+.vcontact_item{
+    display: none;
+    margin: 0 10px;
+}
+.vcontact_item input{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
