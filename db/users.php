@@ -247,19 +247,25 @@ class Users
         return $this->connect->queryAll($sql, [$uid,$uid]);
     }
 
-/*Table: oc_preferences
-Columns:
-userid	varchar(64) PK
-appid	varchar(32) PK
-configkey	varchar(64) PK
-configvalue	longtext*/
-
-    public function updateUserEmail($uid, $email)
+    public function insertOrUpdateUserEmail($uid, $email)
     {
-        return $this->connect->update('*PREFIX*preferences',
-            ["configvalue" => $email], "userid = ? AND appid = 'settings' AND configkey = 'email'",
-            [$uid]
-        );
+        $tbl = '*PREFIX*preferences';
+        $select = $this->connect->select('*', $tbl, "userid = ? AND appid = 'settings' AND configkey = 'email'", [$uid]);
+
+        if($select) {
+            return $this->connect->update($tbl,
+                ["configvalue" => $email], "userid = ? AND appid = 'settings' AND configkey = 'email'",
+                [$uid]
+            );
+        } else {
+            $this->connect->insert($tbl,[
+                'userid' => $uid,
+                'appid' => 'settings',
+                'configkey' => 'email',
+                'configvalue' => $email,
+            ]);
+            return $this->connect->db->errorCode() == '00000' ? true : false;
+        }
     }
 
     public function insertOrUpdateUserContact($uid, $key, $value)

@@ -83,14 +83,14 @@ class ApiController extends Controller {
     public function getvcard()
     {
         $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
-//        $projectUsers = $this->connect->users()->getAllIn($ruo);
+//      $projectUsers = $this->connect->users()->getAllIn($ruo);
 
         // запрос выбрать необходимые данные по каждому ИД
         // в цикле сгенерировать vCard объекты
 
         $vCardData = '';
 
-        foreach($resIds as $as){
+        foreach ($resIds as $as) {
 
             $vcard = new vCard();
 
@@ -130,7 +130,7 @@ class ApiController extends Controller {
             $value = $data['value'];
 
             if($key == 'email') {
-                $params['result'] = $this->connect->users()->updateUserEmail($this->userId, $value);
+                $params['result'] = $this->connect->users()->insertOrUpdateUserEmail($this->userId, $value);
             } else {
                 $params['result'] = $this->connect->users()->insertOrUpdateUserContact($this->userId, $key, $value);
             }
