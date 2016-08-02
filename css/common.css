@@ -74,7 +74,7 @@ strong{font-weight: bold;}
 #users_list{}
 #users_list .tbl.ul_header{}
 #users_list .tbl.ul_header>.tbl_cell{
-    width: 25%;
+    width: 16.5%;
     font-weight: bold;
     line-height: 30px;
     border-bottom: 1px solid #eee;
@@ -85,7 +85,7 @@ strong{font-weight: bold;}
 }
 #users_list .tbl.ul_item{}
 #users_list .tbl.ul_item>.tbl_cell{
-    width: 25%;
+    width: 16.5%;
     line-height: 30px;
     padding-left: 10px;
     border-bottom: 1px solid #eee;

@@ -148,7 +148,7 @@ class MainController extends Controller
 
             $vCardData .= $vcard->show();
         }
-        
+
         header("Content-type: text/directory");
         header("Content-Disposition: attachment; filename=contacts.vcf");
         header("Pragma: public");

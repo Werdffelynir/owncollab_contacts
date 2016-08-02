@@ -81,8 +81,6 @@ class ApiController extends Controller {
 
 
 
-
-
     public function addcontacts($data)
     {
         $params = [
@@ -99,7 +97,7 @@ class ApiController extends Controller {
             $value = $data['value'];
 
             if($key == 'email') {
-                $params['result'] = $this->connect->users()->updateUserEmail($this->userId, $value);
+                $params['result'] = $this->connect->users()->insertOrUpdateUserEmail($this->userId, $value);
             } else {
                 $params['result'] = $this->connect->users()->insertOrUpdateUserContact($this->userId, $key, $value);
             }
