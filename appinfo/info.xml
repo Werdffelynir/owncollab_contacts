@@ -11,4 +11,7 @@
     <dependencies>
         <owncloud min-version="8.1" max-version="9.0" />
     </dependencies>
+    <remote>
+        <file id="caldav">appinfo/caldav.php</file>
+    </remote>
 </info>

@@ -26,5 +26,6 @@ $application->registerRoutes($this, ['routes' => [
 
     ['name' => 'api#index', 'url' => '/api', 'verb' => 'POST'],
 
-]]);
+    ['name' => 'contactsapi#preflighted_cors', 'url' => '/remote/{path}', 'verb' => 'OPTIONS', 'requirements' => array('path' => '.+')],
 
+]]);

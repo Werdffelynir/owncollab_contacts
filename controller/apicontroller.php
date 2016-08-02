@@ -54,8 +54,8 @@ class ApiController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function index() {
-
+    public function index()
+    {
         $key = Helper::post('key');
         $data = Helper::post('data',false);
         $pid = Helper::post('pid');
@@ -122,6 +122,7 @@ class ApiController extends Controller {
             'error_info' => null,
             'result' => null,
         ];
+
         $availableKeys = ['first_name', 'last_name', 'office_tel', 'home_tel', 'email',];
 
         if(!empty($data['key']) && !empty($data['value']) && in_array($data['key'], $availableKeys)) {
@@ -134,6 +135,7 @@ class ApiController extends Controller {
             } else {
                 $params['result'] = $this->connect->users()->insertOrUpdateUserContact($this->userId, $key, $value);
             }
+
             if(!$params['result']) {
                 $params['error'] = true;
                 $params['error_info'] = 'Failed update/insert. key: '. $key .' value: '. $value;

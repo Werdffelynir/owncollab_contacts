@@ -86,6 +86,19 @@ class Application extends App {
             );
         });
 
+        /*
+        $container->registerService('ContactsApiController', function (IAppContainer $c) use ($appName) {
+            return new ContactsApiController(
+                $c->query('AppName'),
+                $c->query('Request'),
+                $c->query('UserId'),
+                $c->query('isAdmin'),
+                $c->query('L10N'),
+                $c->query('Connect')
+            );
+        });*/
+
+
     }
 
 
