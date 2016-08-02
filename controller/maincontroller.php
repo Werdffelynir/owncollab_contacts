@@ -105,7 +105,7 @@ class MainController extends Controller
 
         $ruo = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
         $projectUsers = $this->connect->users()->getAllIn($ruo);
-        $userContacts = $this->connect->users()->getUserContact($this->userId);
+        $userContacts = $this->connect->users()->getUserContacts($this->userId);
 
         $data = [
             'menu' => 'begin',

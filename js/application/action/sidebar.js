@@ -20,9 +20,14 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
     function onAddVCard (event) {
         var target = event.target;
         var vc_item = App.query('.vcontact_item', target.parentNode);
-        var vc_form = App.query('form', vc_item);
 
+        if(vc_item.style.display == 'block') {
+            vc_item.style.display = 'none';
+            return;
+        }
         vc_item.style.display = 'block';
+
+        var vc_form = App.query('form', vc_item);
 
         console.log(target, vc_item, vc_form);
 

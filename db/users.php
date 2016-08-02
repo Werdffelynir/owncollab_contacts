@@ -232,10 +232,11 @@ class Users
 
     public function getUngroupUsersList($refresh = false) {}
 
-    public function getUserContact($uid) {
-        return $this->connect->select('*', '*PREFIX*preferences',
-            "userid = ? AND appid = 'owncollab_contacts'",
-            [$uid]);
+    public function getUserContacts($uid) {
+        $sql = "SELECT *
+                FROM *PREFIX*preferences
+                WHERE appid = 'owncollab_contacts' AND userid = ? OR (appid = 'settings' AND configkey = 'email' AND userid = ?)";
+        return $this->connect->queryAll($sql, [$uid,$uid]);
     }
 
 /*Table: oc_preferences
