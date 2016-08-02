@@ -16,6 +16,7 @@ use OCA\Owncollab_Contacts\Db\Connect;
 use OCA\Owncollab_Contacts\Helper;
 use OCP\Files;
 use OCP\IRequest;
+use OCA\Owncollab_Contacts\vCard;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
@@ -116,6 +117,49 @@ class MainController extends Controller
         ];
 
         return new TemplateResponse($this->appName, 'main', $data);
+
+    }
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function getvcard()
+    {
+        $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
+        $projectUsers = $this->connect->users()->getAllIn($resIds);
+
+
+        $resIds = array_values($resIds);
+        $vCardData = '';
+
+        foreach($projectUsers as $res) {
+
+            $vcard = new vCard();
+
+
+            $displayname = $res['first_name'].' '.$res['last_name'];
+            if(empty(trim($displayname)))
+                $displayname = !empty($res['displayname']) ? $res['displayname'] : $res['uid'];
+
+            $vcard->set('data', [
+                'first_name' => $res['first_name'],
+                'last_name' => $res['last_name'],
+                'display_name' => $displayname,
+                'email1' => $res['email'],
+                'office_tel' => $res['office_tel'],
+                'home_tel' => $res['home_tel'],
+            ]);
+
+            $vCardData .= $vcard->show();
+
+        }
+
+        header("Content-type: text/directory");
+        header("Content-Disposition: attachment; filename=contacts.vcf");
+        header("Pragma: public");
+        echo $vCardData;
+       die;
 
     }
 

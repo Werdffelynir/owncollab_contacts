@@ -135,7 +135,31 @@ strong{font-weight: bold;}
 }
 
 
-
+.download_button{
+    position: relative;
+    width: 95%;
+    height: 55px;
+}
+.download_button>.icon-download{
+    position: absolute;
+    padding: 5px;
+    width: 100%;
+    display: block;
+    height: 33px;
+    font-weight: 300;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 10;
+    text-align: center;
+    background-color: rgba(240,240,240,.9);
+    border: 1px solid rgba(240,240,240,.9);
+    background-position: 5%;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*.loader_min{*/

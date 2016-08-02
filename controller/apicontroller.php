@@ -80,39 +80,6 @@ class ApiController extends Controller {
     }
 
 
-    public function getvcard()
-    {
-        $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
-//      $projectUsers = $this->connect->users()->getAllIn($ruo);
-
-        // запрос выбрать необходимые данные по каждому ИД
-        // в цикле сгенерировать vCard объекты
-
-        $vCardData = '';
-
-        foreach ($resIds as $as) {
-
-            $vcard = new vCard();
-
-            $vcard->set('data', [
-                'first_name' 	=> 'Vasia',
-                'last_name' 	=> 'Vasilev',
-                'display_name' 	=> 'Vasia Vasilev',
-                'email1' 		=> 'manager@admin.com',
-                'office_tel'	=> '+0123456789',
-                'home_tel' 		=> 'My Company',
-            ]);
-
-            $vCardData .= $vcard->show();
-
-
-        }
-
-        // $vCardData
-
-        exit;
-    }
-
 
     public function addcontacts($data)
     {

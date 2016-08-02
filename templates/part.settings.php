@@ -13,6 +13,9 @@
 			Настройки			</button>
 	</div>
 	<div id="app-settings-content" style="display: none;">
+		<div class="download_button">
+			<a href="getvcard" target="_blank" class="icon-download">Export contacts</a>
+		</div>
 		<h2>
 			<label for="webdavurl">WebDAV</label>
 		</h2>
