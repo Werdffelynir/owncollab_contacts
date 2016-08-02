@@ -6,7 +6,6 @@
 $projectUsers = !empty($_['projectUsers']) && is_array($_['projectUsers']) ? $_['projectUsers'] : [];
 
 
-var_dump($projectUsers);
 
 ?>
 

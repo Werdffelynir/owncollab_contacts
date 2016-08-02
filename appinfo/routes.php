@@ -23,6 +23,7 @@ $application = new \OCA\Owncollab_Contacts\AppInfo\Application();
 $application->registerRoutes($this, ['routes' => [
 
     ['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
+    ['name' => 'main#getvcard', 'url' => '/getvcard', 'verb' => 'GET'],
 
     ['name' => 'api#index', 'url' => '/api', 'verb' => 'POST'],
 
