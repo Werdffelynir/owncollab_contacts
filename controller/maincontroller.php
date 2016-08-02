@@ -105,11 +105,13 @@ class MainController extends Controller
 
         $ruo = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
         $projectUsers = $this->connect->users()->getAllIn($ruo);
+        $userContacts = $this->connect->users()->getUserContact($this->userId);
 
         $data = [
             'menu' => 'begin',
             'content' => 'list',
             'projectUsers' => $projectUsers,
+            'userContacts' => $userContacts,
         ];
 
         return new TemplateResponse($this->appName, 'main', $data);

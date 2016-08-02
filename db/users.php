@@ -232,6 +232,12 @@ class Users
 
     public function getUngroupUsersList($refresh = false) {}
 
+    public function getUserContact($uid) {
+        return $this->connect->select('*', '*PREFIX*preferences',
+            "userid = ? AND appid = 'owncollab_contacts'",
+            [$uid]);
+    }
+
 /*Table: oc_preferences
 Columns:
 userid	varchar(64) PK
