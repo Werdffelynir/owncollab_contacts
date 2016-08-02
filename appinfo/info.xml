@@ -8,10 +8,8 @@
     <version>0.0.1</version>
     <namespace>Owncollab_Contacts</namespace>
     <category>other</category>
+
     <dependencies>
         <owncloud min-version="8.1" max-version="9.0" />
     </dependencies>
-    <remote>
-        <file id="caldav">appinfo/caldav.php</file>
-    </remote>
 </info>

@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - owncollab
+ * ownCloud - owncollab_contacts
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -27,6 +27,7 @@ $application->registerRoutes($this, ['routes' => [
 
     ['name' => 'api#index', 'url' => '/api', 'verb' => 'POST'],
 
-    ['name' => 'contactsapi#preflighted_cors', 'url' => '/remote/{path}', 'verb' => 'OPTIONS', 'requirements' => array('path' => '.+')],
+//    ['name' => 'contactsapi#preflighted_cors', 'url' => '/remote/{path}', 'verb' => 'GET', 'requirements' => ['path' => '.+']],
 
 ]]);
+

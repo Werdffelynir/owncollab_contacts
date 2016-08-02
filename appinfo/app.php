@@ -69,3 +69,24 @@ if($currentUri == '/') {}
 /**
  * Checking and saving the files send by email
  */
+
+/*\OCP\API::register(
+	'get',
+	'/apps/owncollab_contacts/c',
+	function($urlParameters) {
+		$data = ['a'=>'b'];
+		var_dump($data);
+		return new \OC_OCS_Result($data);
+	},
+	'owncollab_contacts',
+	\OCP\API::ADMIN_AUTH
+);*/
+
+/*
+http://owncloud9.loc/index.php/apps/calendar/
+
+http://owncloud9.loc/index.php/apps/owncollab_contacts/remote/{path}
+
+http://owncloud9.loc/index.php/apps/owncollab_contacts/c
+
+*/
