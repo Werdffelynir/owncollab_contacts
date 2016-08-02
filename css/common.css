@@ -99,6 +99,13 @@ strong{font-weight: bold;}
     background-position: 14px center;
     background-repeat: no-repeat;
 }
+.ico_loader{
+    background-image: url("/apps/owncollab_contacts/img/loading-small.gif");
+    padding-left: 44px;
+    background-size: 16px 16px;
+    background-position: 14px center;
+    background-repeat: no-repeat;
+}
 .add_vcontact{
     display: block;
     width: 100%;
@@ -131,7 +138,18 @@ strong{font-weight: bold;}
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+/*.loader_min{*/
+    /*background-image: url("/apps/owncollab_contacts/img/loading-small.gif");*/
+    /*!*padding-left: 44px;*!*/
+    /*background-size: 16px 16px;*/
+    /*!*background-position: 14px center;*!*/
+    /*background-repeat: no-repeat;*/
+    /*float: right;*/
+    /*position: absolute;*/
+    /*display: block;*/
+    /*width: 16px;*/
+    /*height: 16px;*/
+/*}*/
 
 
 
