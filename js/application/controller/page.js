@@ -17,6 +17,7 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
         _.errorLineCloseButtonInit();
 
         App.Action.Sidebar.init();
+        App.Action.Editable.init();
 
     }
 

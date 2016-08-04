@@ -104,6 +104,7 @@ class MainController extends Controller
         $data = [
             'menu' => 'begin',
             'content' => 'list',
+            'isAdmin' => $this->isAdmin,
             'projectUsers' => $projectUsers,
             'userContacts' => $userContacts,
         ];

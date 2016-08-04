@@ -90,17 +90,37 @@ class ApiController extends Controller {
             'result' => null,
         ];
 
-        $availableKeys = ['first_name', 'last_name', 'office_tel', 'home_tel', 'email',];
+        $availableKeys = ['displayname', 'first_name', 'last_name', 'office_tel', 'home_tel', 'email',];
 
         if(!empty($data['key']) && !empty($data['value']) && in_array($data['key'], $availableKeys)) {
+
+            if(isset($data['uid']) && $this->isAdmin)
+                $userId = $data['uid'];
+            else
+                $userId = $this->userId;
 
             $key = $data['key'];
             $value = $data['value'];
 
             if($key == 'email') {
-                $params['result'] = $this->connect->users()->insertOrUpdateUserEmail($this->userId, $value);
+
+                $params['result'] = $this->connect->users()->insertOrUpdateUserEmail($userId, $value);
+
+            } else if ($key == 'displayname') {
+
+                $_parts = explode(' ', $value);
+
+                if(count($_parts) > 1){
+                    $firstName = array_shift($_parts);
+                    $params['result'] = $this->connect->users()->insertOrUpdateUserContact($userId, 'first_name', $firstName);
+                    $lastName = join(' ', $_parts);
+                    $params['result'] = $this->connect->users()->insertOrUpdateUserContact($userId, 'last_name', $lastName);
+                } else {
+                    $params['result'] = $this->connect->users()->insertOrUpdateUserContact($userId, 'first_name', $value);
+                }
+
             } else {
-                $params['result'] = $this->connect->users()->insertOrUpdateUserContact($this->userId, $key, $value);
+                $params['result'] = $this->connect->users()->insertOrUpdateUserContact($userId, $key, $value);
             }
 
             if(!$params['result']) {

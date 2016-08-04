@@ -86,14 +86,14 @@ strong{font-weight: bold;}
 #users_list .tbl.ul_item{}
 #users_list .tbl.ul_item>.tbl_cell{
     width: 16.5%;
-    line-height: 30px;
+    line-height: 37px;
     padding-left: 10px;
     border-bottom: 1px solid #eee;
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 .vcontact{}
 .ico_add{
-    background-image: url("/apps/owncollab_contacts/img/add.png");
+    background-image: url("/apps/owncollab_contacts/img/drafts.png");
     padding-left: 44px;
     background-size: 16px 16px;
     background-position: 14px center;
@@ -180,7 +180,14 @@ strong{font-weight: bold;}
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+.contacteditable{}
+.contacteditable:hover{
+    /*padding-left: 18px !important;*/
+    /*background-image: url("/apps/owncollab_contacts/img/drafts.png");*/
+    /*background-size: 16px 16px;*/
+    /*background-position: 0px center;*/
+    /*background-repeat: no-repeat;*/
+}
 
 
 

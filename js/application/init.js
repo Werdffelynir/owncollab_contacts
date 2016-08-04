@@ -35,6 +35,7 @@ App.require('dependence', [
     App.urlScript + 'application/extension/cache.js',
     App.urlScript + 'application/action/api.js',
     App.urlScript + 'application/action/sidebar.js',
+    App.urlScript + 'application/action/editable.js',
     App.urlScript + 'application/controller/page.js'
 
 ], initDependence, initError);

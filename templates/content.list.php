@@ -4,18 +4,20 @@
  */
 
 $projectUsers = !empty($_['projectUsers']) && is_array($_['projectUsers']) ? $_['projectUsers'] : [];
+$editableClass = ($_['isAdmin']) ? 'contacteditable' : '';
+
 
 ?>
 
 <div id="users_list">
 
     <div class="tbl ul_header">
-        <div class="tbl_cell">Имя пользователя</div>
-        <div class="tbl_cell">Полное имя</div>
+        <div class="tbl_cell">Id</div>
+        <div class="tbl_cell">Full name</div>
         <div class="tbl_cell">E-mail</div>
         <div class="tbl_cell">Office tel</div>
         <div class="tbl_cell">Home tel</div>
-        <div class="tbl_cell">Группы</div>
+        <div class="tbl_cell">Groups</div>
     </div>
 
     <?php foreach($projectUsers as $urs):
@@ -26,12 +28,12 @@ $projectUsers = !empty($_['projectUsers']) && is_array($_['projectUsers']) ? $_[
 
         $usrGroups = join(", ", $urs['gid']);
         ?>
-        <div class="tbl ul_item">
+        <div class="tbl ul_item" data-uid="<?php p($urs['uid']) ?>">
             <div class="tbl_cell"><?php p($urs['uid']) ?></div>
-            <div class="tbl_cell"><?php p($displayname) ?></div>
-            <div class="tbl_cell"><?php p($urs['email']) ?></div>
-            <div class="tbl_cell"><?php p($urs['office_tel']) ?></div>
-            <div class="tbl_cell"><?php p($urs['home_tel']) ?></div>
+            <div class="tbl_cell <?php echo $editableClass?>" data-key="displayname"><?php p($displayname) ?></div>
+            <div class="tbl_cell <?php echo $editableClass?>" data-key="email"><?php p($urs['email']) ?></div>
+            <div class="tbl_cell <?php echo $editableClass?>" data-key="office_tel"><?php p($urs['office_tel']) ?></div>
+            <div class="tbl_cell <?php echo $editableClass?>" data-key="home_tel"><?php p($urs['home_tel']) ?></div>
             <div class="tbl_cell"><strong><?php p($usrGroups) ?></strong></div>
         </div>
     <?php endforeach; ?>
