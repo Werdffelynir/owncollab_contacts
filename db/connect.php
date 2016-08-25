@@ -12,6 +12,11 @@ class Connect
 
     /** @var Users  database table */
     private $users;
+    private $addressbook;
+    private $addresscontacts;
+    private $addressgroups;
+    private $addressRelContacts;
+    private $addressShare;
 
     /**
      * Connect constructor.
@@ -21,7 +26,12 @@ class Connect
         $this->db = $db;
 
         // Register tables models
-        $this->users = new Users($this, 'users');
+        $this->users = new Users($this, '*PREFIX*users');
+        $this->addressbook = new Addressbook($this, '*PREFIX*collab_addressbook');
+        $this->addresscontacts = new Addresscontacts($this, '*PREFIX*collab_addresscontacts');
+        $this->addressgroups = new Addressgroups($this, '*PREFIX*collab_addressgroups');
+        $this->addressRelContacts = new AddressRelContacts($this, '*PREFIX*collab_address_rel_contacts');
+        $this->addressShare = new AddressShare($this, '*PREFIX*collab_address_share');
     }
 
     /**
@@ -110,6 +120,41 @@ class Connect
      */
     public function users() {
         return $this->users;
+    }
+
+    /**
+     * @return Addressbook
+     */
+    public function addressbook() {
+        return $this->addressbook;
+    }
+
+    /**
+     * @return Addresscontacts
+     */
+    public function addresscontacts() {
+        return $this->addresscontacts;
+    }
+
+    /**
+     * @return Addressgroups
+     */
+    public function addressgroups() {
+        return $this->addressgroups;
+    }
+
+    /**
+     * @return AddressRelContacts
+     */
+    public function addressRelContacts() {
+        return $this->addressRelContacts;
+    }
+
+    /**
+     * @return AddressShare
+     */
+    public function addressShare() {
+        return $this->addressShare;
     }
 
 }

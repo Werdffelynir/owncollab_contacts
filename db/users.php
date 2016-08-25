@@ -33,7 +33,7 @@ class Users
     public function __construct($connect, $tableName)
     {
         $this->connect = $connect;
-        $this->tableName = '*PREFIX*' . $tableName;
+        $this->tableName = $tableName;
     }
 
 
