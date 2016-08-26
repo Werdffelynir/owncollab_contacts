@@ -54,7 +54,6 @@ class MainController extends Controller
         $this->isAdmin = $isAdmin;
         $this->l10n = $l10n;
         $this->connect = $connect;
-
     }
 
     /**
@@ -65,6 +64,91 @@ class MainController extends Controller
     {
         return $this->showList();
     }
+
+
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     * @return TemplateResponse
+     */
+    public function showList()
+    {
+        goto Start;
+
+        var_dump([
+            'a'
+        ]);
+
+        exit;
+        Start:
+
+        $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
+        $projectUsers = $this->connect->users()->getAllIn($resIds);
+        $userContacts = $this->connect->users()->getUserContacts($this->userId);
+
+        $data = [
+            'menu' => 'begin',
+            'content' => 'list',
+            'isAdmin' => $this->isAdmin,
+            'projectUsers' => $projectUsers,
+            'userContacts' => $userContacts,
+        ];
+
+        return new TemplateResponse($this->appName, 'main', $data);
+    }
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     * @return TemplateResponse
+     */
+    public function showContact()
+    {
+
+
+        $data = [
+            'menu' => 'begin',
+            'content' => 'contact',
+            'isAdmin' => $this->isAdmin,
+        ];
+
+        return new TemplateResponse($this->appName, 'main', $data);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Blocked application and show error message
@@ -83,29 +167,6 @@ class MainController extends Controller
 
         return new TemplateResponse($this->appName, 'main', $data);
     }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     * @return TemplateResponse
-     */
-    public function showList()
-    {
-        $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
-        $projectUsers = $this->connect->users()->getAllIn($resIds);
-        $userContacts = $this->connect->users()->getUserContacts($this->userId);
-
-        $data = [
-            'menu' => 'begin',
-            'content' => 'list',
-            'isAdmin' => $this->isAdmin,
-            'projectUsers' => $projectUsers,
-            'userContacts' => $userContacts,
-        ];
-
-        return new TemplateResponse($this->appName, 'main', $data);
-    }
-
 
     /**
      * @NoAdminRequired

@@ -27,7 +27,8 @@ var App = new NamespaceApplication({
 
 App.require('libs', [
     App.urlScript + 'libs/util.js',
-    App.urlScript + 'libs/linker.js'
+    App.urlScript + 'libs/linker.js',
+    App.urlScript + 'libs/event.key.manager.js'
 ], initLibrary, initError);
 
 
@@ -35,7 +36,7 @@ App.require('dependence', [
     App.urlScript + 'application/extension/cache.js',
     App.urlScript + 'application/action/api.js',
     App.urlScript + 'application/action/sidebar.js',
-    App.urlScript + 'application/action/editable.js',
+    App.urlScript + 'application/action/contact.js',
     App.urlScript + 'application/controller/page.js'
 
 ], initDependence, initError);

@@ -29,6 +29,7 @@
         this.query = app.query;
         this.queryAll = app.queryAll;
         this.each = app.each;
+        this.on = app.on;
         this.setProperties(properties);
 
     };
@@ -294,11 +295,13 @@
         else if (typeof parent === 'object' && parent.nodeType === Node.ELEMENT_NODE)
             from = parent;
 
-
         if (from) {
-            elems = [].slice.call(from.querySelectorAll(selector));
+            if (typeof selector === 'object' &&
+                (selector.nodeType === Node.ELEMENT_NODE || selector.nodeType === Node.DOCUMENT_NODE))
+                elems = [selector];
+            else
+                elems = [].slice.call(from.querySelectorAll(selector));
         }
-
 
         if (elems.length > 0 && typeof callback == 'function')
             callback.call(this, elems);
@@ -325,6 +328,22 @@
             for (i in list) callback.call({}, list[i], i, tmp);
     };
 
+    /**
+     *
+     * @param eventName
+     * @param selector
+     * @param callback
+     * @param bubble
+     */
+    app.on = function (eventName, selector, callback, bubble) {
+        var elements =  app.queryAll(selector);
+        if(elements) {
+            app.each(elements, function (item) {
+                if(typeof item === 'object')
+                    item.addEventListener(eventName, callback, !!bubble);
+            });
+        }
+    };
 
     /**
      *
@@ -507,7 +526,7 @@
 
 
     /**
-     * @type {app}
+     * @type app
      */
     window.NamespaceApplication = app;
 

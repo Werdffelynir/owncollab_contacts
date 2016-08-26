@@ -89,15 +89,32 @@ strong{font-weight: bold;}
     line-height: 37px;
     padding-left: 10px;
     border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-.vcontact{}
-.ico_add{
-    background-image: url("/apps/owncollab_contacts/img/drafts.png");
+.vcontact {}
+.ico_add {
+    background-image: url("/apps/owncollab_contacts/img/add.png");
     padding-left: 44px;
     background-size: 16px 16px;
     background-position: 14px center;
     background-repeat: no-repeat;
+    opacity: 0.6;
+}
+
+.ico_add:hover{
+    opacity: 1;
+}
+.sb_block{
+}
+.sb_block>div:first-child{
+    line-height: 30px;
+}
+.sb_block>div:last-child{
+    padding: 0 10px;
+}
+.sb_block input[type=text]{
+    width: 100%;
 }
 .ico_loader{
     background-image: url("/apps/owncollab_contacts/img/loading-small.gif");
@@ -106,7 +123,12 @@ strong{font-weight: bold;}
     background-position: 14px center;
     background-repeat: no-repeat;
 }
-.add_vcontact{
+#app-settings-content h4{
+    height: 33px;
+    font-weight: 300;
+    font-size: 14px;
+}
+/*.add_vcontact{
     display: block;
     width: 100%;
     line-height: 44px;
@@ -132,7 +154,7 @@ strong{font-weight: bold;}
 .vcontact_item input{
     width: 100%;
     margin-bottom: 5px;
-}
+}*/
 
 
 .download_button{
@@ -180,14 +202,188 @@ strong{font-weight: bold;}
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-.contacteditable{}
-.contacteditable:hover{
+/*.contacteditable{}*/
+/*.contacteditable:hover{*/
     /*padding-left: 18px !important;*/
     /*background-image: url("/apps/owncollab_contacts/img/drafts.png");*/
     /*background-size: 16px 16px;*/
     /*background-position: 0px center;*/
     /*background-repeat: no-repeat;*/
+/*}*/
+
+#ads_groups{
+    margin-top: 20px;
 }
+#ads_groups ul{
+    padding-left: 44px;
+}
+#ads_groups ul li{
+    opacity: 0.6;
+    line-height: 30px;
+}
+#ads_groups ul li:hover{
+    opacity: 1;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+input[type="checkbox"] {
+    display:none;
+}
+
+input[type="checkbox"] + label {
+    margin-right: 8px;
+}
+
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:0px 0px 0 0;
+    vertical-align:middle;
+    background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAElBMVEUAAACenp6dnZ2enp6Wlpb///+ZjNYiAAAABHRSTlMA0tPUFjUH1QAAAB9JREFUeAFjIAYws8ABE1iAhRUOWAa3ABPC6YzEeBUAZMUCnSs/s9MAAAAASUVORK5CYII=') left top no-repeat;;
+    cursor:pointer;
+}
+
+input[type="checkbox"]:checked + label span {
+    background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAATlBMVEUAAABhfaJhfKFhfaFhfaFbeJ1Vc5p3j66Qo72Spr6Tpr+Up7+VqMCWqMCer8ais8ijs8imtsqnt8uouMyquczy9ff8/P39/f7+/v7////UwwP2AAAABnRSTlMA0tPU7/fZzSivAAAAWUlEQVR42o2OSw6AIAxEEbUqqPhB69z/oqYSQeKGt5vXZlpVQk0R/Qj6kAtvc+FxNkF0s+QdPISN9sBCtIHN29EzVge2qXS8IPMoxLDNz07m/0cSOuVKFXADuOgFHgZOXGwAAAAASUVORK5CYII=') left top no-repeat;
+}
+
+
+input[type="radio"] {
+    display:none;
+}
+
+input[type="radio"] + label {}
+
+input[type="radio"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:0px 0px 0 0;
+    vertical-align:middle;
+    background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAElBMVEUAAACenp6dnZ2enp6Wlpb///+ZjNYiAAAABHRSTlMA0tPUFjUH1QAAAB9JREFUeAFjIAYws8ABE1iAhRUOWAa3ABPC6YzEeBUAZMUCnSs/s9MAAAAASUVORK5CYII=')
+    left top no-repeat;
+    cursor:pointer;
+}
+
+input[type="radio"]:checked + label span {
+    background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAATlBMVEUAAABhfaJhfKFhfaFhfaFbeJ1Vc5p3j66Qo72Spr6Tpr+Up7+VqMCWqMCer8ais8ijs8imtsqnt8uouMyquczy9ff8/P39/f7+/v7////UwwP2AAAABnRSTlMA0tPU7/fZzSivAAAAWUlEQVR42o2OSw6AIAxEEbUqqPhB69z/oqYSQeKGt5vXZlpVQk0R/Qj6kAtvc+FxNkF0s+QdPISN9sBCtIHN29EzVge2qXS8IPMoxLDNz07m/0cSOuVKFXADuOgFHgZOXGwAAAAASUVORK5CYII=')
+    left top no-repeat;
+}
+
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.ads_avatar{
+    width: 160px;
+    height: 160px;
+    background-color: #d58512;
+}
+.ads_avatar img{
+    width: 160px;
+    height: 160px;
+}
+
+.ads_contact_left{
+    padding: 10px;
+    width: 200px;
+}
+
+.ads_contact_center{
+    padding-top: 10px;
+}
+
+.ads_field{margin-bottom: 10px;}
+.ads_field label{
+    display: block;
+    padding-left: 10px;
+    font-size: 11px;
+    color: #757575;
+}
+.ads_field input{
+    display: block;
+    width: 220px;
+}
+
+#add_fields_list{
+    width: 220px;
+    position: absolute;
+    border: 1px solid #eee;
+}
+#add_fields_list ul{}
+#add_fields_list ul li{
+    padding: 2px 10px;
+    display: block;
+}
+#add_fields_list ul li:hover{
+    background-color: #eee;
+}
+
+
+
+.ads_contact_right{}
+.ads_contact_right{
+    text-align: right;
+    padding-right: 15px;
+}
+
+
+
+
+
+
+
+
+.inline_btns{
+
+}
+.inline_btns>label{
+    display:inline-block;
+    height:19px;
+    margin:0px 0px 0 0;
+}
+.inline_btns>span{
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:0px 0px 0 0;
+    vertical-align:middle;
+}
+
+#btn_delete{
+    background:url('/apps/owncollab_contacts/img/trash.png') left top no-repeat;
+}
+#btn_save{
+    background:url('/apps/owncollab_contacts/img/drafts.png') left top no-repeat;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 
 

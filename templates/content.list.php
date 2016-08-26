@@ -3,8 +3,8 @@
  * @var array $_
  */
 
-$projectUsers = !empty($_['projectUsers']) && is_array($_['projectUsers']) ? $_['projectUsers'] : [];
-$editableClass = ($_['isAdmin']) ? 'contacteditable' : '';
+//$projectUsers = !empty($_['projectUsers']) && is_array($_['projectUsers']) ? $_['projectUsers'] : [];
+//$editableClass = ($_['isAdmin']) ? 'contacteditable' : '';
 
 
 ?>
@@ -12,31 +12,21 @@ $editableClass = ($_['isAdmin']) ? 'contacteditable' : '';
 <div id="users_list">
 
     <div class="tbl ul_header">
-        <div class="tbl_cell">Id</div>
         <div class="tbl_cell">Full name</div>
         <div class="tbl_cell">E-mail</div>
-        <div class="tbl_cell">Office tel</div>
-        <div class="tbl_cell">Home tel</div>
+        <div class="tbl_cell">Telephone</div>
+        <div class="tbl_cell">Address</div>
         <div class="tbl_cell">Groups</div>
     </div>
 
-    <?php foreach($projectUsers as $urs):
+    <div class="tbl ul_item" data-uid="">
+        <div class="tbl_cell " data-key="displayname">&nbsp;</div>
+        <div class="tbl_cell " data-key="email">&nbsp;</div>
+        <div class="tbl_cell " data-key="office_tel">&nbsp;</div>
+        <div class="tbl_cell " data-key="address">&nbsp;</div>
+        <div class="tbl_cell"><strong>&nbsp;</strong></div>
+    </div>
 
-        $displayname = $urs['first_name'].' '.$urs['last_name'];
-        if(empty($displayname))
-            $displayname = !empty($urs['displayname']) ? $urs['displayname'] : $urs['uid'];
-
-        $usrGroups = join(", ", $urs['gid']);
-        ?>
-        <div class="tbl ul_item" data-uid="<?php p($urs['uid']) ?>">
-            <div class="tbl_cell"><?php p($urs['uid']) ?></div>
-            <div class="tbl_cell <?php echo $editableClass?>" data-key="displayname"><?php p($displayname) ?></div>
-            <div class="tbl_cell <?php echo $editableClass?>" data-key="email"><?php p($urs['email']) ?></div>
-            <div class="tbl_cell <?php echo $editableClass?>" data-key="office_tel"><?php p($urs['office_tel']) ?></div>
-            <div class="tbl_cell <?php echo $editableClass?>" data-key="home_tel"><?php p($urs['home_tel']) ?></div>
-            <div class="tbl_cell"><strong><?php p($usrGroups) ?></strong></div>
-        </div>
-    <?php endforeach; ?>
 
 </div>
 
