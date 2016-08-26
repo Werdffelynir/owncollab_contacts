@@ -26,7 +26,7 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
     /**
      * @namespace App.Controller.Page.readEvents
      */
-    _.loadList = function(){
+    _.loadList = function() {
 
         jQuery('.ul_item').click(function(e){
             location.href = '/index.php/apps/owncollab_contacts/contact';
