@@ -19,7 +19,33 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
         App.Action.Sidebar.init();
         App.Action.Contact.init();
 
+        _.loadList();
+
     }
+
+    /**
+     * @namespace App.Controller.Page.readEvents
+     */
+    _.loadList = function(){
+
+        jQuery('.ul_item').click(function(e){
+            location.href = '/index.php/apps/owncollab_contacts/contact';
+        });
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @namespace App.Controller.Page.readEvents
