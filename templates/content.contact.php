@@ -3,6 +3,13 @@
  * @var array $_
  */
 
+
+$formFieldsTypes = $_['formFieldsTypes'];
+
+$display_name = array_shift($formFieldsTypes);
+$department = array_shift($formFieldsTypes);
+$addressbook_name = 'Addressbook';
+
 ?>
 
 <style>
@@ -15,7 +22,7 @@
         <div class="ads_avatar">
 <!--            <img src="/apps/owncollab_contacts/img/drafts.png" alt="">-->
         </div>
-        tbl_cell
+        ...
     </div>
 
 
@@ -25,18 +32,23 @@
     <div class="tbl_cell valign_top ads_contact_center">
 
         <div class="ads_field">
-            <label for="field_1">field_1</label>
-            <input id="field_1" type="text">
+            <label for="display_name">Name</label>
+            <input id="display_name" type="text" value="<?php p($display_name)?>">
         </div>
 
         <div class="ads_field">
-            <label for="field_2">field_2</label>
-            <input id="field_2" type="text">
+            <label for="department">Group</label>
+            <input id="department" type="text" value="<?php p($department)?>">
         </div>
 
         <div class="ads_field">
-            <label for="field_3">field_3</label>
-            <input id="field_3" type="text">
+            <label for="addressbook_name">Addressbook</label>
+            <input id="addressbook_name" type="text" value="<?php p($addressbook_name)?>">
+        </div>
+
+        <div id="ads_dynamic_fields">
+
+
         </div>
 
         <br>
@@ -44,12 +56,9 @@
             <input id="add_field" type="button" value="Add field">
             <div id="add_fields_list" style="display: none">
                 <ul>
-                    <li>field_1</li>
-                    <li>field_2</li>
-                    <li>field_3</li>
-                    <li>field_4</li>
-                    <li>field_5</li>
-                    <li>field_6</li>
+                    <?php foreach($formFieldsTypes as $tkey => $tval): ?>
+                        <li data-id="<?php p($tkey)?>"><?php p($tval)?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>

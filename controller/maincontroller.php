@@ -74,14 +74,11 @@ class MainController extends Controller
      */
     public function showList()
     {
-        goto Start;
+        $usersProject = $this->connect->users()->getGroupsUsersList();
 
-        var_dump([
-            'a'
-        ]);
-
+        var_dump($usersProject);
         exit;
-        Start:
+
 
         $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
         $projectUsers = $this->connect->users()->getAllIn($resIds);
@@ -105,11 +102,12 @@ class MainController extends Controller
      */
     public function showContact()
     {
-
+        $formFieldsTypes = $this->connect->addresscontacts()->getFormFieldsTypes();
 
         $data = [
             'menu' => 'begin',
             'content' => 'contact',
+            'formFieldsTypes' => $formFieldsTypes,
             'isAdmin' => $this->isAdmin,
         ];
 

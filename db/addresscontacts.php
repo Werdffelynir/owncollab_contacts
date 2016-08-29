@@ -31,6 +31,25 @@ class Addresscontacts
         'is_private',
     ];
 
+    // name => type
+    private $formFieldsTypes = [
+        'display_name' => 'Name',
+        'department' => 'Group',
+        'company' => 'Company',
+        'work_country' => 'Country',
+        'work_city' => 'City',
+        'office_tel' => 'Phone',
+        'work_address' => 'Address',
+        'home_tel' => 'Home Phone',
+        'home_address' => 'Home Address',
+        'birthday' => 'Birthday',
+        'email1' => 'Email',
+        'email2' => 'Email',
+        'note' => 'Notes',
+        'url' => 'Website',
+    ];
+
+
     /**
      * Users constructor.
      * @param $connect
@@ -42,6 +61,10 @@ class Addresscontacts
         $this->tableName = $tableName;
     }
 
+    public function getFormFieldsTypes()
+    {
+        return $this->formFieldsTypes;
+    }
 
     /**
      * @return mixed
