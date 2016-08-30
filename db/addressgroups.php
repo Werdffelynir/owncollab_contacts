@@ -52,6 +52,35 @@ class Addressgroups
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+
+    /**
+     * Create Group for id_book
+     *
+     * @param $id_book
+     * @param $name
+     * @param bool $is_private
+     * @return bool|int
+     */
+    public function create($id_book, $name, $is_private = true)
+    {
+        $sql = "INSERT INTO $this->tableName (`id_book`, `name`, `is_private`)
+                VALUES (:id_book, :name, :is_private)";
+
+        $PDOStatement = $this->connect->db->executeQuery($sql, [
+            ':id_book' => $id_book,
+            ':name' => $name,
+            ':is_private' => $is_private,
+        ]);
+
+        return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
+    }
 
 
 }

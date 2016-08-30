@@ -4,7 +4,8 @@
  * @var array $_
  */
 
-$url = \OC::$server->getURLGenerator()->getAbsoluteURL('index.php/apps/owncollab_contacts')
+$url = \OC::$server->getURLGenerator()->getAbsoluteURL('index.php/apps/owncollab_contacts');
+$contacts = !empty($_['contacts']) ? $_['contacts'] : [];
 
 ?>
 <div id="app-settings">
@@ -13,15 +14,12 @@ $url = \OC::$server->getURLGenerator()->getAbsoluteURL('index.php/apps/owncollab
 	</div>
 	<div id="app-settings-content" style="">
 
-<!--        <h4>Addressbook</h4>-->
-        <div class="oneline">
-            <input id="private_contacts" name="show_contacts" type="checkbox">
-            <label for="private_contacts"> <span></span>Contacts </label>
-        </div>
-        <div class="oneline">
-            <input id="project_contacts" name="show_project_contacts" type="checkbox">
-            <label for="project_contacts"> <span></span>Project Contacts </label>
-        </div>
+        <?php foreach($contacts as $id => $contact):?>
+            <div class="oneline">
+                <input id="contact_<?php p($id)?>" data-id="<?php p($id)?>" type="checkbox" checked>
+                <label for="contact_<?php p($id)?>"> <span></span> <?php p($contact['book']['name'])?> </label>
+            </div>
+        <?php endforeach;?>
 
         <h4>&nbsp;</h4>
 

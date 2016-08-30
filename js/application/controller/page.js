@@ -13,13 +13,23 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
     function afterDOMLoaded () {
 
         _.node['contentError'] = App.query('#app-content-error');
+        _.node['frontendData'] = App.query('#app-frontend-data');
         _.node['contentInlineError'] = App.query('#app-content-inline-error');
+
+        try{
+            App.provide = JSON.parse(_.node['frontendData'].textContent);
+            _.node['frontendData'].textContent = '';
+            console.log('App.provide >>> ', App.provide);
+        }catch (e) {}
+
         _.errorLineCloseButtonInit();
 
         App.Action.Sidebar.init();
-        App.Action.Contact.init();
+        App.Action.List.init();
 
-        _.loadList();
+        //App.Action.Contact.init(App.provide);
+
+        //_.loadList();
 
     }
 

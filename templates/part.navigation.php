@@ -14,6 +14,10 @@ $valIn = function ($key) use ($userContacts) {
     return '';
 };*/
 
+//var_dump($_['projectContacts']['book']);
+
+//var_dump($_['customContacts'][0]['book']);
+
 ?>
 
 <style>

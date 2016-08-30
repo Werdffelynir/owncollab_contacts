@@ -18,7 +18,8 @@ class AddressShare
     private $connect;
 
 
-    /** Table: oc_collab_address_share
+    /**
+     * Table: oc_collab_address_share
      * @var string
      */
     private $tableName;
@@ -53,6 +54,17 @@ class AddressShare
 
     }
 
+    public function shareWith($id_book, $uid_owner, $uid_with, $is_private = true)
+    {
+        $sql = "INSERT INTO $this->tableName (`id_book`, `uid_owner`, `uid_with`, `is_private`)
+                VALUES (:id_book, :uid_owner, :uid_with, :is_private);";
 
+        return $this->connect->query($sql, [
+            ':id_book' => $id_book,
+            ':uid_owner' => $uid_owner,
+            ':uid_with' => $uid_with,
+            ':is_private' => $is_private,
+        ]);
+    }
 
 }

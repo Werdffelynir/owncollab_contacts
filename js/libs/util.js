@@ -308,6 +308,10 @@
         return Object.prototype.toString.call(data).slice(8, -1);
     };
 
+    util.isIterated = function (data) {
+        return typeof data === 'object';
+    };
+
     /**
      * Convert HTML form to encode URI string
      * @param form

@@ -11,6 +11,7 @@ var App = new NamespaceApplication({
         return OC.getProtocol() + '://' + OC.getHost() + OC.generateUrl('/apps/owncollab_contacts') + link;
     },
     urlScript: '/apps/owncollab_contacts/js/',
+    provide: false,
     host: OC.getHost(),
     locale: OC.getLocale(),
     protocol: OC.getProtocol(),
@@ -37,6 +38,7 @@ App.require('dependence', [
     App.urlScript + 'application/action/api.js',
     App.urlScript + 'application/action/sidebar.js',
     App.urlScript + 'application/action/contact.js',
+    App.urlScript + 'application/action/list.js',
     App.urlScript + 'application/controller/page.js'
 
 ], initDependence, initError);

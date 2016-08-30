@@ -5,7 +5,7 @@
  */
 
 $content = isset($_['content']) ? $_['content'] : 'error';
-
+$frontendData = isset($_['frontend_data']) ? $_['frontend_data'] : '{}';
 ?>
 
 <div id="app">
@@ -31,6 +31,6 @@ $content = isset($_['content']) ? $_['content'] : 'error';
 
 		</div>
 	</div>
-
+	<div id="app-frontend-data" style="display: none"><?php echo $frontendData ?></div>
 </div>
 

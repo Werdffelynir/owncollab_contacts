@@ -12,6 +12,7 @@
 namespace OCA\Owncollab_Contacts\Controller;
 
 use OC\Files\Filesystem;
+use OCA\Owncollab_Contacts\AddressBookHandler;
 use OCA\Owncollab_Contacts\Db\Connect;
 use OCA\Owncollab_Contacts\Helper;
 use OCP\Files;
@@ -29,7 +30,10 @@ class MainController extends Controller
     private $userId;
     private $l10n;
     private $isAdmin;
+    /** @var Connect  */
     private $connect;
+    /** @var AddressBookHandler  */
+    private $addressBookHandler;
 
     /**
      * MainController constructor.
@@ -54,6 +58,7 @@ class MainController extends Controller
         $this->isAdmin = $isAdmin;
         $this->l10n = $l10n;
         $this->connect = $connect;
+        $this->addressBookHandler = new AddressBookHandler($this->connect);
     }
 
     /**
@@ -62,6 +67,10 @@ class MainController extends Controller
      */
     public function index()
     {
+        // $this->addressBookHandler->createProjectContacts();
+        // $this->addressBookHandler->createPrivateContacts($this->userId, 'My Contact', ['My Home', 'My Work', 'My Business']);
+        // exit;
+
         return $this->showList();
     }
 
@@ -74,22 +83,27 @@ class MainController extends Controller
      */
     public function showList()
     {
-        $usersProject = $this->connect->users()->getGroupsUsersList();
+        $contacts = [];
+        $customBooks = $this->addressBookHandler->getAllCustomAddressBooks($this->userId);
+        $projectContacts = $this->addressBookHandler->getProjectContacts();
+        foreach($customBooks as $book) {
+            $contacts[$book['id_book']] = $this->addressBookHandler->getContactsByAddressBook($book['id_book']);
+        }
 
-        var_dump($usersProject);
-        exit;
-
-
-        $resIds = $this->connect->users()->getResourcesOwncollabAllUsersOnly();
-        $projectUsers = $this->connect->users()->getAllIn($resIds);
-        $userContacts = $this->connect->users()->getUserContacts($this->userId);
+        $contacts['project_contacts'] = $projectContacts;
+        $frontendData = [
+            'userId' => $this->userId,
+            'isAdmin' => $this->isAdmin,
+            'contacts' => $contacts
+        ];
 
         $data = [
             'menu' => 'begin',
             'content' => 'list',
+            'userId' => $this->userId,
             'isAdmin' => $this->isAdmin,
-            'projectUsers' => $projectUsers,
-            'userContacts' => $userContacts,
+            'contacts' => $contacts,
+            'frontend_data' => json_encode($frontendData),
         ];
 
         return new TemplateResponse($this->appName, 'main', $data);

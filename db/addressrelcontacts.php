@@ -50,6 +50,30 @@ class AddressRelContacts
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
 
+    /**
+     * @param $id_group
+     * @param $id_contact
+     * @return bool|int
+     */
+    public function create($id_group, $id_contact)
+    {
+        $sql = "INSERT INTO $this->tableName (`id_group`, `id_contact`)
+                VALUES (:id_group, :id_contact)";
+
+        $PDOStatement = $this->connect->db->executeQuery($sql, [
+            ':id_group' => $id_group,
+            ':id_contact' => $id_contact,
+        ]);
+
+        return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
+    }
 
 }

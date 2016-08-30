@@ -5,6 +5,16 @@
 
 //$projectUsers = !empty($_['projectUsers']) && is_array($_['projectUsers']) ? $_['projectUsers'] : [];
 //$editableClass = ($_['isAdmin']) ? 'contacteditable' : '';
+$data = [
+    'menu' => 'begin',
+    'content' => 'list',
+    'userId' => $this->userId,
+    'isAdmin' => $this->isAdmin,
+    'projectContacts' => [],
+    'customContacts' => [],
+];
+
+
 
 
 ?>
@@ -18,6 +28,8 @@
         <div class="tbl_cell">Address</div>
         <div class="tbl_cell">Groups</div>
     </div>
+
+    <div id="list_contacts"></div>
 
     <div class="tbl ul_item" data-uid="">
         <div class="tbl_cell " data-key="displayname">&nbsp;</div>

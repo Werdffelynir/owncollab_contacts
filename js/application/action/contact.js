@@ -14,13 +14,11 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
      */
     _.init = function() {
         var addField = App.query('#add_field');
-
         if(!addField) return;
 
         _.node['addField'] = addField;
         _.node['addFieldList'] = App.query('#add_fields_list');
         _.node['dynamicFields'] = App.query('#ads_dynamic_fields');
-
 
         jQuery(addField).click(function(e){
             jQuery(_.node['addFieldList']).slideToggle(400);
@@ -28,9 +26,15 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
         jQuery(_.node['addFieldList']).click(function(e){
             console.log(e.target);
             _.appendField(e.target.textContent, e.target.getAttribute('data-id'));
+            e.target.parentNode.removeChild(e.target);
         });
-
     };
+
+    /**
+     * Contact view
+     * @param name
+     * @param label
+     */
     _.appendField = function(name, label) {
         var div = document.createElement('div'), html = '';
         html += '<label for="'+label+'">'+name+'</label>';
@@ -40,6 +44,10 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
         div.className = 'ads_field';
         _.node['dynamicFields'].appendChild(div);
     };
+
+
+
+
 
     return _;
 

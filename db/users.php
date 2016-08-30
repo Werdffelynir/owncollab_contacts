@@ -144,7 +144,7 @@ class Users
 
     /**
      * @return array
-     */
+
     public function getResourcesOwncollabInProjectOnly()
     {
         $uids = [];
@@ -167,6 +167,26 @@ class Users
         }
 
         return array_unique($uids);
-    }
+    } */
 
+
+    /**
+     * @param bool $refresh
+     * @return mixed|null
+     */
+    public function getUngroupUsers($refresh = false)
+    {
+        static $usersData = null;
+
+        if($usersData === null || $refresh) {
+            $sql = "SELECT u.uid, u.displayname, p.configvalue as email
+                    FROM *PREFIX*users u
+                    LEFT OUTER JOIN *PREFIX*group_user gu ON (gu.uid = u.uid)
+                    LEFT JOIN *PREFIX*preferences p ON (p.userid = u.uid AND p.appid = 'settings' AND p.configkey = 'email')
+                    WHERE gu.uid IS NULL";
+
+            $usersData = $this->connect->queryAll($sql);
+        }
+        return $usersData;
+    }
 }
