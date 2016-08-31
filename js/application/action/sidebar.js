@@ -18,10 +18,20 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
         if(sbBlocks)
             App.each(sbBlocks, function(btn){ createSidebarBtn(btn) });
 
+        // ... ... ...
+        _.node['addContactFrom'] = App.query('#add_contact_item form');
+        _.node['addGroupFrom'] = App.query('#add_group_item form');
+
+        _.node['addContactFrom'].addEventListener('submit', App.Action.Contact.onAddContact);
+        _.node['addGroupFrom'].addEventListener('submit', App.Action.Contact.onAddGroup);
+
+
         // init address book switcher
         _.node['addressBookInputs'] = App.queryAll('.oneline input');
         bookSwitcher();
     };
+
+
 
     /**
      *

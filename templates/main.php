@@ -17,6 +17,7 @@ $frontendData = isset($_['frontend_data']) ? $_['frontend_data'] : '{}';
 
 	<div id="app-content">
 		<div id="app-content-error"></div>
+		<div id="app-content-dox"></div>
 		<div id="app-content-wrapper">
 
 			<div id="app-content-inline-error" style="display: none">

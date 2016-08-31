@@ -11,8 +11,10 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
 
 
     function afterDOMLoaded () {
-
+        //App.Controller.Page.node['contentBox']
         _.node['contentError'] = App.query('#app-content-error');
+        _.node['contentBox'] = App.query('#app-content-dox');
+        _.node['contentWrapper'] = App.query('#app-content-wrapper');
         _.node['frontendData'] = App.query('#app-frontend-data');
         _.node['contentInlineError'] = App.query('#app-content-inline-error');
 
@@ -29,20 +31,10 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
 
         //App.Action.Contact.init(App.provide);
 
-        //_.loadList();
+
 
     }
 
-    /**
-     * @namespace App.Controller.Page.readEvents
-     */
-    _.loadList = function() {
-
-        jQuery('.ul_item').click(function(e){
-            location.href = '/index.php/apps/owncollab_contacts/contact';
-        });
-
-    };
 
 
 

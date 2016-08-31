@@ -79,6 +79,86 @@ class ApiController extends Controller {
         return new DataResponse($data);
     }
 
+    public function getcontact($data)
+    {
+        $fieldsTypes = $this->connect->addresscontacts()->getFormFieldsTypes();
+        $bookId = $data['book'];
+        $contactId = $data['contact'];
+
+        $contact = $this->connect->addresscontacts()->getOne($contactId);
+        if($contact) {
+            try {
+                $contact['fields'] = json_decode($contact['fields'], true);
+            }catch(\Exception $e){}
+        }
+
+        $html = Helper::renderPartial($this->appName, 'tpl.contact', [
+            'bookId' => $bookId,
+            'contact' => $contact,
+            'fieldsTypes' => $fieldsTypes
+        ]);
+
+        sleep(1);
+        return new DataResponse($html);
+    }
+
+
+    public function getcontacttpl($data)
+    {
+        $fieldsTypes = $this->connect->addresscontacts()->getFormFieldsTypes();
+        $contact = [
+            'fields' => [
+                'display_name' => '&nbsp;',
+                'email1' => '&nbsp;',
+            ]
+        ];
+        $html = Helper::renderPartial($this->appName, 'tpl.contact', [
+            'bookId' => false,
+            'contact' => $contact,
+            'fieldsTypes' => $fieldsTypes
+        ]);
+
+        return new DataResponse($html);
+    }
+
+
+
+    public function savecontact($data)
+    {
+        $is_private = (bool) $data['is_private'];
+        $contactId = $data['id_contact'];
+        $fieldsSource = $data['fields'];
+        $fields = [];
+
+
+
+        if(!empty($fieldsSource)) {
+
+            try {
+                $fieldsSource = json_decode($fieldsSource, true);
+                $fields = $this->connect->addresscontacts()->defaultFieldsTypes($fieldsSource, true);
+            }catch(\Exception $e){}
+
+            $fields = json_encode($fields);
+
+            if(empty($contactId)) {
+                // Insert new contact
+                $result = $this->connect->addresscontacts()->create($this->userId, $fields, $is_private);
+            }
+            else {
+                // Update contact
+                $result = (int) $this->connect->addresscontacts()->updateContactFields($contactId, $fields);
+            }
+
+
+        }
+        return new DataResponse([$fields]);
+
+
+        exit;
+    }
+
+
 
 
     public function addcontacts($data)

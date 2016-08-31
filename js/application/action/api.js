@@ -30,7 +30,7 @@ if(App.namespace) { App.namespace('Action.Api', function(App) {
                 console.error("API request error to the key: [" + key + "] Error message: ", error);
             },
             complete: function (jqXHR, status) {
-                //console.log(status, jqXHR.getAllResponseHeaders());
+                // console.log(status, jqXHR.getAllResponseHeaders());
                 if (status == 'timeout') {
                     console.error("You have exceeded the request time. possible problems with the Internet, or an error on the server");
                 }

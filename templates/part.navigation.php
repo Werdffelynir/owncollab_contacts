@@ -34,14 +34,14 @@ $valIn = function ($key) use ($userContacts) {
 <div class="sb_block">
     <div id="add_contact" class="ico_add">Add Contact</div>
     <div id="add_contact_item">
-        <input type="text" placeholder="Contact Name" value="">
+        <form><input type="text" placeholder="Contact Name" value=""></form>
     </div>
 </div>
 
 <div class="sb_block">
     <div id="add_group" class="ico_add">Add Group</div>
     <div id="add_group_item">
-        <input type="text" placeholder="Group Name" value="">
+        <form><input type="text" placeholder="Group Name" value=""></form>
     </div>
 </div>
 

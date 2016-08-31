@@ -193,7 +193,7 @@
      * @returns {boolean}
      */
     util.isNum = function (param) {
-        return !isNaN(param);
+        return !isNaN(parseFloat(param)) && isFinite(param);
     };
 
     // Determine whether a variable is empty
@@ -908,6 +908,28 @@
                 return t[index];
             });
     };
+
+
+
+    /**
+     *
+     * @param elem     Node елемент
+     * @param callback получи как аргумет родительский елемент при каждой итерации,
+     *                  если функция вернот false итерация прикратится
+     * @param limit    количество итерация с возможных,
+     */
+    util.eachParent = function (elem, callback, limit) {
+        var i = 0;
+        limit = limit || 99;
+        while(elem.nodeType === Node.ELEMENT_NODE && i < limit ) {
+            var res = callback.call({}, elem);
+            if(res===false) i = limit;
+            elem = elem.parentNode;
+            i ++;
+        }
+    };
+
+
 
     window.Util = util;
 

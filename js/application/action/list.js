@@ -31,13 +31,32 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
 
         // Show data contacts
         _.refreshList();
+
+    };
+
+
+    /**
+     * @namespace App.Controller.List.activeTableRowActions
+     */
+    _.activeTableRowActions = function() {
+        jQuery('.ul_item').click(function(e){
+            Util.eachParent(e.target, function(parent){
+                var attrDataId = parent.getAttribute('data-id');
+                if(attrDataId) {
+                    App.Action.Contact.display.apply(App.Action.Contact, attrDataId.split('.'));
+                    return false;
+                }
+            },5);
+        });
     };
 
     /**
      * @namespace App.Action.List.appendContact
      * @param contact
      */
-    _.appendContact = function(contact) {
+    _.appendContact = function(contact, group) {
+
+        if(typeof contact !== 'object' || typeof contact['fields'] !== 'object') return;
 
         var div = document.createElement('div'),
             field = contact['fields'],
@@ -51,42 +70,26 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
 
         div.innerHTML = html;
         div.className = 'tbl ul_item';
-        div.setAttribute('data-id', contact['id_contact']);
+        div.setAttribute('data-id', group+'.'+contact['id_contact']);
         div.setAttribute('data-uid', contact['uid']);
 
         _.node['listContacts'].appendChild(div);
     };
 
 
-/*    <div class="tbl ul_item" data-uid="">
- <div class="tbl_cell " data-key="displayname">&nbsp;</div>
- <div class="tbl_cell " data-key="email">&nbsp;</div>
- <div class="tbl_cell " data-key="office_tel">&nbsp;</div>
- <div class="tbl_cell " data-key="address">&nbsp;</div>
- <div class="tbl_cell"><strong>&nbsp;</strong></div>
- </div>*/
-
     /**
      * @namespace App.Action.List.refreshList
      */
     _.refreshList = function() {
-
         _.node['listContacts'].textContent = '';
-
         App.each(_.activeAddressBook, function(obj, key) {
-            //console.log(obj, key);
             if(Util.isIterated(obj.contacts)) {
-                App.each(obj.contacts, function(contact, group){
-
-                    App.each(contact, _.appendContact);
+                App.each(obj.contacts, function(contact){
+                    App.each(contact, function(contactItem){_.appendContact(contactItem, key)});
                 });
             }
-            //                    console.log(contact);
         });
-
-
-
-
+        _.activeTableRowActions();
     };
 
 

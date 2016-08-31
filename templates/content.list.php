@@ -39,33 +39,6 @@ $data = [
         <div class="tbl_cell"><strong>&nbsp;</strong></div>
     </div>
 
-    <div class="tbl ul_item" data-uid="">
-        <div class="tbl_cell " data-key="displayname">&nbsp;</div>
-        <div class="tbl_cell " data-key="email">&nbsp;</div>
-        <div class="tbl_cell " data-key="office_tel">&nbsp;</div>
-        <div class="tbl_cell " data-key="address">&nbsp;</div>
-        <div class="tbl_cell"><strong>&nbsp;</strong></div>
-    </div>
-
-
-    <div class="tbl ul_item" data-uid="">
-        <div class="tbl_cell " data-key="displayname">&nbsp;</div>
-        <div class="tbl_cell " data-key="email">&nbsp;</div>
-        <div class="tbl_cell " data-key="office_tel">&nbsp;</div>
-        <div class="tbl_cell " data-key="address">&nbsp;</div>
-        <div class="tbl_cell"><strong>&nbsp;</strong></div>
-    </div>
-
-
-    <div class="tbl ul_item" data-uid="">
-        <div class="tbl_cell " data-key="displayname">&nbsp;</div>
-        <div class="tbl_cell " data-key="email">&nbsp;</div>
-        <div class="tbl_cell " data-key="office_tel">&nbsp;</div>
-        <div class="tbl_cell " data-key="address">&nbsp;</div>
-        <div class="tbl_cell"><strong>&nbsp;</strong></div>
-    </div>
-
-
 </div>
 
 <?php

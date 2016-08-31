@@ -44,7 +44,7 @@ class Addresscontacts
         'home_address' => 'Home Address',
         'birthday' => 'Birthday',
         'email1' => 'Email',
-        'email2' => 'Email',
+        'email2' => 'Email 2',
         'note' => 'Notes',
         'url' => 'Website',
     ];
@@ -95,7 +95,33 @@ class Addresscontacts
      */
     public function getAll()
     {
+        return $this->connect->select('*', $this->tableName);
+    }
 
+
+    /**
+     * @param $id_contact
+     * @return null|array
+     */
+    public function getOne($id_contact)
+    {
+        $result = $this->connect->select('*', $this->tableName, 'id_contact = ?', [$id_contact]);
+        return $result ? $result[0] : null;
+    }
+
+    /**
+     * Обновляет поля одного контакта
+     * @param $contactId
+     * @param $fields
+     * @return \Doctrine\DBAL\Driver\Statement
+     */
+    public function updateContactFields($contactId, $fields)
+    {
+        $result = $this->connect->update($this->tableName, [
+            'fields' => $fields
+        ], 'id_contact = ?', [$contactId]);
+
+        return $result->errorCode();
     }
 
     /**
