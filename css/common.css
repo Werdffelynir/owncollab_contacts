@@ -171,8 +171,14 @@ strong{font-weight: bold;}
     width: 100%;
     margin-bottom: 5px;
 }*/
+.ico_loader_min{
+    background-image: url("/core/img/loading-small.gif");
+    padding: 20px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
 .ico_loader{
-    background-image: url("/apps/owncollab_contacts/img/loading.gif");
+    background-image: url("/core/img/loading.gif");
     padding: 20px;
     /*background-size: 16px 16px;*/
     background-position: center center;
@@ -246,6 +252,7 @@ strong{font-weight: bold;}
 #ads_groups ul li{
     opacity: 0.6;
     line-height: 30px;
+    /*font-size: 12px;*/
 }
 #ads_groups ul li:hover{
     opacity: 1;
@@ -308,11 +315,18 @@ input[type="radio"]:checked + label span {
 .ads_avatar{
     width: 160px;
     height: 160px;
-    background-color: #d58512;
+    /*background-color: #d58512;*/
 }
 .ads_avatar img{
     width: 160px;
     height: 160px;
+}
+.ads_avatar_label{
+    color: #ffffff;
+    font-size: 72px;
+    text-align: center;
+    line-height: 160px;
+    text-transform: uppercase;
 }
 
 .ads_contact_left{
@@ -379,15 +393,18 @@ input[type="radio"]:checked + label span {
     display:inline-block;
     width:19px;
     height:19px;
-    margin:0px 0px 0 0;
+    margin: 0px 5px 0 5px;
     vertical-align:middle;
 }
 
-#btn_delete{
+.btn_delete{
     background:url('/apps/owncollab_contacts/img/trash.png') left top no-repeat;
 }
-#btn_save{
+.btn_save{
     background:url('/core/img/actions/checkmark.png') left top no-repeat;
+}
+.btn_save_loading{
+    background:url('/core/img/loading-small.gif') left top no-repeat;
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #app-box-content{}

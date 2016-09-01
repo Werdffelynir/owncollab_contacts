@@ -42,7 +42,7 @@ $addressbook_name = 'Addressbook';
         <div class="ads_avatar">
 <!--            <img src="/apps/owncollab_contacts/img/drafts.png" alt="">-->
         </div>
-        ...
+
     </div>
 
 
@@ -88,7 +88,7 @@ $addressbook_name = 'Addressbook';
 
     <div class="tbl_cell valign_top ads_contact_right">
         <div id="ads_btn_delete" class="inline_btns">
-            <label for="btn_delete">Delete</label><span id="btn_delete"></span>
+            <label for="btn_delete">Delete</label><span class="btn_delete"></span>
         </div>
     </div>
     
@@ -96,6 +96,6 @@ $addressbook_name = 'Addressbook';
 
 <div class="text_right">
     <div id="ads_btn_save" class="inline_btns">
-        <label for="btn_save">Save changes</label><span id="btn_save"></span>
+        <label for="btn_save">Save changes</label><span class="btn_save"></span>
     </div>
 </div>

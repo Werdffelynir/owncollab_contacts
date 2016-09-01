@@ -98,7 +98,6 @@ class ApiController extends Controller {
             'fieldsTypes' => $fieldsTypes
         ]);
 
-        sleep(1);
         return new DataResponse($html);
     }
 

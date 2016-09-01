@@ -11,6 +11,9 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
     };
 
     /**
+     * @namespace App.Action.Sidebar.node['boxGroupsUl']
+     */
+    /**
      * @namespace App.Action.Sidebar.init
      */
     _.init = function() {
@@ -19,6 +22,7 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
             App.each(sbBlocks, function(btn){ createSidebarBtn(btn) });
 
         // ... ... ...
+        _.node['boxGroupsUl'] = App.query('#ads_groups ul');
         _.node['addContactFrom'] = App.query('#add_contact_item form');
         _.node['addGroupFrom'] = App.query('#add_group_item form');
 
@@ -58,11 +62,15 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
         // All address books is be checked
         jQuery(_.node['addressBookInputs']).each(function(i, item){item.checked = true;});
         jQuery(_.node['addressBookInputs']).change(function(event){
+
             var idBook = event.target.getAttribute('data-id');
-            if(event.target.checked)
+
+            if(event.target.checked) {
                 App.Action.List.activeAddressBook[idBook] = App.provide.contacts[idBook];
-            else
+            } else {
+
                 App.Action.List.activeAddressBook[idBook] = false;
+            }
 
             // Refresh views in Sidebar and list of contacts
             App.Action.List.refreshList();
@@ -70,7 +78,6 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
 
 
     }
-
 
     return _;
 
