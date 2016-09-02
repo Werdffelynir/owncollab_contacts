@@ -126,7 +126,8 @@ class ApiController extends Controller {
     public function savecontact($data)
     {
         $requestData = [
-            'data' => $data,
+            'uid' => $this->userId,
+            //'data' => $data,
             'fields' => null,
             'result' => null,
             'error' => null,
@@ -152,16 +153,18 @@ class ApiController extends Controller {
                 $this->connect->db->beginTransaction();
 
                 $id = (int) $this->connect->addresscontacts()->create($this->userId, $fields, $is_private);
-                $this->connect->addressRelContacts()->create($id_group, $id);
-                $requestData['result'] = $id;
+                $rel_id = $this->connect->addressRelContacts()->create($id_group, $id);
+                $requestData['rel_id'] = $rel_id;
+                $requestData['insert_id'] = $id;
 
                 $this->connect->db->commit();
             }
             else if(is_numeric($id_contact)){
                 // Update contact
                 $fields = json_encode($fields);
-                $result = (int) $this->connect->addresscontacts()->updateContactFields($id_contact, $fields);
-                $requestData['result'] = $result;
+                $update_id = (int) $this->connect->addresscontacts()->updateContactFields($id_contact, $fields);
+                $requestData['update_id'] = $update_id;
+
             }
         }
 

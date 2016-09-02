@@ -229,24 +229,51 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                     return;
                 }
 
-                App.Action.Api.request('savecontact', function(data){
+                App.Action.Api.request('savecontact', function(response){
                     var contacts = App.provide.contacts[id_book] ? App.provide.contacts[id_book].contacts : App.provide.contacts['project_contacts'].contacts;
 
                     savebtnIco.classList.remove('btn_save_loading');
                     savebtnIco.classList.add('btn_save');
 
-                    if(contacts) {
-                        var g, i;
-                        for (g in contacts){
-                            if(Util.isArr(contacts[g])) {
-                                for (i = 0; i < contacts[g].length; i ++) {
-                                    if(contacts[g][i]['id_contact'] === id_contact) {
-                                        Util.objMergeOnlyExists(contacts[g][i]['fields'], fields);
+
+                    if(sendData.id_contact === '' && response['insert_id']) {
+
+                        // Add
+                        var groupName = (function(){
+                            var ig,
+                                groups =  App.provide.contacts[id_book].groups;
+                            for(ig = 0; ig < groups.length; ig++){
+                                if(groups[ig]['id_group'] == id_group) {
+                                    return groups[ig]['name'];
+                                }
+                            }
+                        })();
+                        var contactData = {
+                            fields: response['fields'],
+                            groupname: groupName,
+                            id_contact: response['insert_id'],
+                            is_private: 1,
+                            uid: response['uid']
+                        };
+                        contacts[groupName].push(contactData);
+
+                    }
+                    else {
+
+                        // Change
+                        if(contacts) {
+                            var g, i;
+                            for (g in contacts){
+                                if(Util.isArr(contacts[g])) {
+                                    for (i = 0; i < contacts[g].length; i ++) {
+                                        if(contacts[g][i]['id_contact'] === id_contact) {
+                                            Util.objMergeOnlyExists(contacts[g][i]['fields'], fields);
+                                        }
                                     }
                                 }
                             }
+                            //App.Action.List.activeAddressBook[id_book] = App.provide.contacts[id_book];
                         }
-                        //App.Action.List.activeAddressBook[id_book] = App.provide.contacts[id_book];
                     }
 
                     App.Action.List.refreshList();
