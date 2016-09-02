@@ -377,6 +377,8 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
      */
     _.colorByUid = function (uid, node) {
 
+        uid = uid || "UID";
+
         var colorStyle,
             hash = md5(uid),
             maxRange = parseInt('ffffffffffffffffffffffffffffffff', 16),
