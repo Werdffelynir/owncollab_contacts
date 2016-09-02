@@ -392,7 +392,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
             node.innerHTML = '';
 
             if(typeof label === 'object')
-                node.append(label)
+                node.appendChild(label)
         }
 
         return colorStyle;
