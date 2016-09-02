@@ -390,7 +390,9 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
             node.style.backgroundColor = colorStyle;
             var label = Util.createElement('div', {class:'ads_avatar_label'}, uid.slice(0,1));
             node.innerHTML = '';
-            node.append(label)
+
+            if(typeof label === 'object')
+                node.append(label)
         }
 
         return colorStyle;

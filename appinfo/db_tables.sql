@@ -1,7 +1,7 @@
 CREATE TABLE `oc_collab_addressbook` (
   `id_book` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `uid` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `uid` varchar(45) NOT NULL,
   `is_project` int(11) DEFAULT '0',
   `is_private` int(11) DEFAULT '1',
   PRIMARY KEY (`id_book`)
@@ -9,7 +9,7 @@ CREATE TABLE `oc_collab_addressbook` (
 
 CREATE TABLE `oc_collab_addresscontacts` (
   `id_contact` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
+  `uid` varchar(45) NOT NULL,
   `fields` varchar(4096) DEFAULT NULL,
   `is_private` int(11) DEFAULT '1',
   PRIMARY KEY (`id_contact`)
