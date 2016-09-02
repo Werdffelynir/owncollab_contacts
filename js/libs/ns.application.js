@@ -323,9 +323,12 @@
     app.each = function (list, callback, tmp) {
         var i = 0;
         if (list instanceof Array)
-            for (i = 0; i < list.length; i++) callback.call({}, list[i], i, tmp);
+            for (i = 0; i < list.length; i++)
+                callback.call({}, list[i], i, tmp);
+
         else if(typeof list === 'object')
-            for (i in list) callback.call({}, list[i], i, tmp);
+            for (i in list)
+                callback.call({}, list[i], i, tmp);
     };
 
     /**

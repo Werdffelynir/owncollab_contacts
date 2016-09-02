@@ -26,6 +26,7 @@ $application->registerRoutes($this, ['routes' => [
     ['name' => 'main#show_contact', 'url' => '/contact', 'verb' => 'GET'],
     ['name' => 'main#publicgetvcard', 'url' => '/vcard', 'verb' => 'GET'],
     ['name' => 'main#getvcard', 'url' => '/getvcard', 'verb' => 'GET'],
+    ['name' => 'api#savegroup', 'url' => '/savegroup', 'verb' => 'POST'],
     ['name' => 'api#index', 'url' => '/api', 'verb' => 'POST'],
 
 ]]);

@@ -67,9 +67,13 @@ class MainController extends Controller
      */
     public function index()
     {
-        // $this->addressBookHandler->createProjectContacts();
-        // $this->addressBookHandler->createPrivateContacts($this->userId, 'My Contact', ['My Home', 'My Work', 'My Business']);
-        // exit;
+        if(!$this->addressBookHandler->getProjectContacts()) {
+            $this->addressBookHandler->createProjectContacts();
+        }
+
+        if(!$this->addressBookHandler->getAllCustomAddressBooks($this->userId)) {
+            $this->addressBookHandler->createPrivateContacts($this->userId, 'Contact', ['Home', 'Work', 'Business']);
+        }
 
         return $this->showList();
     }

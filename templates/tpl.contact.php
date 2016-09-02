@@ -6,12 +6,10 @@
 
 $ftypes = isset($_['fieldsTypes']) ? $_['fieldsTypes'] : [];
 $contact = isset($_['contact']) ? $_['contact'] : [];
-$bookId = isset($_['bookId']) ? $_['bookId'] : false;
-$params = isset($_['params']) ? $_['params'] : [];
+$idBook = isset($_['bookId']) ? $_['bookId'] : false;
+$idGroup = isset($_['id_group']) ? $_['id_group'] : '';
+$idContact = !empty($contact['id_contact']) ? $contact['id_contact'] : '';
 
-//var_dump($contact);
-//$display_name = array_shift($fieldsTypes);
-//$department = array_shift($fieldsTypes);
 
 
 function addField ($key, $value, $label) {
@@ -38,26 +36,29 @@ $addressbook_name = 'Addressbook';
 <div class="tbl">
     
     <div class="tbl_cell valign_top ads_contact_left">
-
-        <div class="ads_avatar">
-<!--            <img src="/apps/owncollab_contacts/img/drafts.png" alt="">-->
-        </div>
-
+        <div class="ads_avatar"></div>
     </div>
-
-
-
-
 
     <div class="tbl_cell valign_top ads_contact_center">
 
-        <?php if($bookId):?>
-            <input type="text" name="book" hidden="hidden" value="<?php p($bookId)?>">
-        <?php endif; ?>
+        <input type="text" name="id_contact" hidden="hidden" value="<?php p($idContact)?>">
 
-        <?php if(!empty($contact['id_contact'])):?>
-            <input type="text" name="id" hidden="hidden" value="<?php p($contact['id_contact'])?>">
-        <?php endif; ?>
+        <div class="ads_field">
+            <label for="id_book">Addressbook</label>
+            <input id="id_book" name="id_book" type="button" data-id="<?php p($idBook)?>" value=" ">
+            <div id="id_book_list" style="display: none">
+                <ul></ul>
+            </div>
+        </div>
+
+        <div class="ads_field">
+            <label for="id_group">Group</label>
+            <input id="id_group" name="id_group" type="button" data-id="<?php p($idGroup)?>" value=" ">
+            <div id="id_group_list" style="display: none">
+                <ul></ul>
+            </div>
+        </div>
+
 
         <?php
         foreach($contact['fields'] as $key => $value):
@@ -67,6 +68,7 @@ $addressbook_name = 'Addressbook';
             }
         endforeach;
         ?>
+
 
         <div id="ads_dynamic_fields"></div>
 

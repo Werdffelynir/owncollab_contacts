@@ -350,18 +350,19 @@ input[type="radio"]:checked + label span {
     width: 220px;
 }
 
-#add_fields_list{
+#add_fields_list, #id_book_list, #id_group_list{
     width: 220px;
     position: absolute;
     border: 1px solid #eee;
+    background-color: #fff;
 }
-#add_fields_list ul{}
-#add_fields_list ul li{
+
+#add_fields_list ul li, #id_book_list ul li, #id_group_list ul li{
     padding: 1px 10px;
     display: block;
     font-size: 11px;
 }
-#add_fields_list ul li:hover{
+#add_fields_list ul li:hover, #id_book_list ul li:hover, #id_group_list ul li:hover{
     background-color: #eee;
 }
 
@@ -377,8 +378,14 @@ input[type="radio"]:checked + label span {
 
 
 
-
-
+.lis_disable{
+    background-color: #d3d3d3 !important;
+    color: #555555 !important;
+}
+.lis_disable:hover, .lis_disable:active, .lis_disable:focus{
+    background-color: #d3d3d3 !important;
+    color: #555555 !important;
+}
 
 
 .inline_btns{

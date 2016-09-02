@@ -21,7 +21,7 @@ if(App.namespace){App.namespace('Controller.Page', function(App){
         try{
             App.provide = JSON.parse(_.node['frontendData'].textContent);
             _.node['frontendData'].textContent = '';
-            console.log('App.provide >>> ', App.provide);
+            //console.log('App.provide >>> ', App.provide);
         }catch (e) {}
 
         _.errorLineCloseButtonInit();

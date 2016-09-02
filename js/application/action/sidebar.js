@@ -29,9 +29,9 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
         _.node['addContactFrom'].addEventListener('submit', App.Action.Contact.onAddContact);
         _.node['addGroupFrom'].addEventListener('submit', App.Action.Contact.onAddGroup);
 
-
         // init address book switcher
         _.node['addressBookInputs'] = App.queryAll('.oneline input');
+
         bookSwitcher();
     };
 

@@ -42,12 +42,20 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
     _.activeTableRowActions = function() {
         jQuery('.ul_item').click(function(e){
             Util.eachParent(e.target, function(parent){
-                var attrDataId = parent.getAttribute('data-id');
-                var attrDataUId = parent.getAttribute('data-uid');
-                if(attrDataId) {
-                    var p = attrDataId.split('.');
-                    p.push(attrDataUId);
-                    App.Action.Contact.display.apply(App.Action.Contact, p);
+
+                if(parent.getAttribute('data-id-book')) {
+                    var attrUId = parent.getAttribute('data-uid');
+                    var attrNameBook = parent.getAttribute('data-id-book');
+                    var attrNameGroup = parent.getAttribute('data-id-group');
+                    var attrIdContact = parent.getAttribute('data-id-contact');
+
+                    App.Action.Contact.currentUid = attrUId;
+                    App.Action.Contact.currentBookName = attrNameBook;
+                    App.Action.Contact.currentGroupName = attrNameGroup;
+                    App.Action.Contact.currentContact = attrIdContact;
+
+                    App.Action.Contact.display.apply(App.Action.Contact, [attrUId, attrNameBook, attrNameGroup, attrIdContact]);
+
                     return false;
                 }
             },5);
@@ -58,24 +66,26 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
      * @namespace App.Action.List.appendContact
      * @param contact
      */
-    _.appendContact = function(contact, group) {
+    _.appendContact = function(contactItem, addressBookName, groupName) {
 
-        if(typeof contact !== 'object' || typeof contact['fields'] !== 'object') return;
+        if(typeof contactItem !== 'object' || typeof contactItem['fields'] !== 'object') return;
 
         var div = document.createElement('div'),
-            field = contact['fields'],
+            field = contactItem['fields'],
             html = '';
 
         html += ' <div class="tbl_cell " data-key="display_name">' + field['display_name'] + '&nbsp;</div>';
         html += ' <div class="tbl_cell " data-key="email1">' + field['email1'] + '&nbsp;</div>';
         html += ' <div class="tbl_cell " data-key="office_tel">' + field['office_tel'] + '&nbsp;</div>';
         html += ' <div class="tbl_cell " data-key="work_address">' + field['work_address'] + '&nbsp;</div>';
-        html += ' <div class="tbl_cell " data-key="groups"><strong>' + contact['groupname'] + '&nbsp;</strong></div>';
+        html += ' <div class="tbl_cell " data-key="groups"><strong>' + contactItem['groupname'] + '&nbsp;</strong></div>';
 
         div.innerHTML = html;
         div.className = 'tbl ul_item';
-        div.setAttribute('data-id', group+'.'+contact['id_contact']);
-        div.setAttribute('data-uid', contact['uid']);
+        div.setAttribute('data-uid', contactItem['uid']);
+        div.setAttribute('data-id-book', addressBookName);
+        div.setAttribute('data-id-group', groupName);
+        div.setAttribute('data-id-contact', contactItem['id_contact']);
 
         _.node['listContacts'].appendChild(div);
     };
@@ -90,7 +100,10 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
 
         _.appendCategory({id_group:'all',id_book:'',is_private:'',name: 'Everyone'}, '0');
 
-        App.each(_.activeAddressBook, function(obj, key) {
+        App.each(_.activeAddressBook, function(obj, addressBookName) {
+
+            if(typeof obj !== 'object') return;
+
             var id_book = obj.book['id_book'];
             var id_group = null;
             var groupsArray = obj.groups;
@@ -107,14 +120,12 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
                         }
                     }
 
-                    console.log(_.fiterFor, id_book, id_group);
-
                     if(_.fiterFor['id_book'] !== null && _.fiterFor['id_group'] !== null) {
 
                         if(_.fiterFor['id_book'] === id_book && _.fiterFor['id_group'] === id_group){
                             // show all
                             App.each(contact, function(contactItem){
-                                _.appendContact(contactItem, key)
+                                _.appendContact(contactItem, addressBookName, groupName)
                             });
                         }
 
@@ -122,7 +133,7 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
                     } else {
                         // show all
                         App.each(contact, function(contactItem){
-                            _.appendContact(contactItem, key)
+                            _.appendContact(contactItem, addressBookName, groupName)
                         });
                     }
 

@@ -107,6 +107,7 @@ class ApiController extends Controller {
         $fieldsTypes = $this->connect->addresscontacts()->getFormFieldsTypes();
         $contact = [
             'fields' => [
+                'id_contact' => '',
                 'display_name' => '&nbsp;',
                 'email1' => '&nbsp;',
             ]
@@ -121,39 +122,76 @@ class ApiController extends Controller {
     }
 
 
-
+    // Object { fields: "{"display_name":"Mr. Forest"}", id_book: "18", id_group: "35", id_contact: "", is_private: true }
     public function savecontact($data)
     {
+        $requestData = [
+            'data' => $data,
+            'fields' => null,
+            'result' => null,
+            'error' => null,
+            'error_info' => null,
+        ];
+
         $is_private = (bool) $data['is_private'];
-        $contactId = $data['id_contact'];
+        $id_book = $data['id_book'];
+        $id_group = $data['id_group'];
+        $id_contact = $data['id_contact'];
         $fieldsSource = $data['fields'];
         $fields = [];
 
-
-
-        if(!empty($fieldsSource)) {
+        if(!empty($fieldsSource) && !empty($id_book) && !empty($id_group)) {
 
             try {
                 $fieldsSource = json_decode($fieldsSource, true);
                 $fields = $this->connect->addresscontacts()->defaultFieldsTypes($fieldsSource, true);
             }catch(\Exception $e){}
 
-            $fields = json_encode($fields);
-
-            if(empty($contactId)) {
+            if(empty($id_contact)) {
                 // Insert new contact
-                $result = $this->connect->addresscontacts()->create($this->userId, $fields, $is_private);
+                $this->connect->db->beginTransaction();
+
+                $id = (int) $this->connect->addresscontacts()->create($this->userId, $fields, $is_private);
+                $this->connect->addressRelContacts()->create($id_group, $id);
+                $requestData['result'] = $id;
+
+                $this->connect->db->commit();
             }
-            else {
+            else if(is_numeric($id_contact)){
                 // Update contact
-                $result = (int) $this->connect->addresscontacts()->updateContactFields($contactId, $fields);
+                $fields = json_encode($fields);
+                $result = (int) $this->connect->addresscontacts()->updateContactFields($id_contact, $fields);
+                $requestData['result'] = $result;
             }
-
-
         }
-        return new DataResponse([$fields]);
+
+        $requestData['fields'] = $fields;
+        return new DataResponse($requestData);
+    }
 
 
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     * @return DataResponse
+     */
+    public function savegroup()
+    {
+        //name_group id_book
+        $requestData = [
+            'id_book' =>  Helper::post('id_book'),
+            'name_group' => Helper::post('name_group'),
+            'result' => null,
+            'error' => null,
+            'error_info' => null,
+        ];
+
+        if(!empty($requestData['id_book']) && !empty($requestData['name_group'])) {
+            $result = $this->connect->addressgroups()->create($requestData['id_book'], $requestData['name_group'], true);
+            $requestData['result'] = $result;
+        }
+
+        header('Location: /index.php/apps/owncollab_contacts');
         exit;
     }
 
