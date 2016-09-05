@@ -230,8 +230,8 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                 }
 
                 App.Action.Api.request('savecontact', function(response){
-                    var contacts = App.provide.contacts[id_book] ? App.provide.contacts[id_book].contacts : App.provide.contacts['project_contacts'].contacts;
-
+                    var book = App.provide.contacts[id_book] ? App.provide.contacts[id_book] : App.provide.contacts['project_contacts'];
+                    var contacts = book.contacts;
                     savebtnIco.classList.remove('btn_save_loading');
                     savebtnIco.classList.add('btn_save');
 
@@ -241,7 +241,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                         // Add
                         var groupName = (function(){
                             var ig,
-                                groups =  App.provide.contacts[id_book].groups;
+                                groups =  book.groups;
                             for(ig = 0; ig < groups.length; ig++){
                                 if(groups[ig]['id_group'] == id_group) {
                                     return groups[ig]['name'];
