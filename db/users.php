@@ -189,4 +189,31 @@ class Users
         }
         return $usersData;
     }
+
+
+    public function vCardGenerate()
+    {
+
+        $resIds = $this->getResourcesOwncollabAllUsersOnly();
+        $projectUsers = $this->getAllIn($resIds);
+        $vCardData = '';
+        foreach($projectUsers as $res) {
+            $vcard = new vCard();
+            $displayname = $res['first_name'].' '.$res['last_name'];
+            if(empty(trim($displayname)))
+                $displayname = !empty($res['displayname']) ? $res['displayname'] : $res['uid'];
+
+            $vcard->set('data', [
+                'first_name' => $res['first_name'],
+                'last_name' => $res['last_name'],
+                'display_name' => $displayname,
+                'email1' => $res['email'],
+                'office_tel' => $res['office_tel'],
+                'home_tel' => $res['home_tel'],
+            ]);
+            $vCardData .= $vcard->show();
+        }
+        return $vCardData;
+    }
+
 }

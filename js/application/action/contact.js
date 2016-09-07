@@ -235,7 +235,6 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                     savebtnIco.classList.remove('btn_save_loading');
                     savebtnIco.classList.add('btn_save');
 
-
                     if(sendData.id_contact === '' && response['insert_id']) {
 
                         // Add
@@ -278,7 +277,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
 
                     App.Action.List.refreshList();
 
-                },sendData);
+                }, sendData);
             }
         }
 
