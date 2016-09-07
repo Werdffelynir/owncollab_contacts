@@ -395,6 +395,13 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
 
     };
 
+    /**
+     * @namespace App.Action.Contact.onExportVcard
+     * @param event
+     */
+    _.onExportVcard = function (event) {
+
+    };
 
     /**
      * @namespace App.Action.Contact.colorByUid

@@ -1,6 +1,7 @@
 if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
 
     /**
+     * App.Action.Sidebar.node['boxGroupsUl']
      * @namespace App.Action.Sidebar
      * @type {*}
      */
@@ -10,9 +11,7 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
         sbbs:{}
     };
 
-    /**
-     * @namespace App.Action.Sidebar.node['boxGroupsUl']
-     */
+
     /**
      * @namespace App.Action.Sidebar.init
      */
@@ -25,9 +24,11 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
         _.node['boxGroupsUl'] = App.query('#ads_groups ul');
         _.node['addContactFrom'] = App.query('#add_contact_item form');
         _.node['addGroupFrom'] = App.query('#add_group_item form');
+        _.node['exportVcard'] = App.query('#export_vcard');
 
         _.node['addContactFrom'].addEventListener('submit', App.Action.Contact.onAddContact);
         _.node['addGroupFrom'].addEventListener('submit', App.Action.Contact.onAddGroup);
+        _.node['exportVcard'].addEventListener('click', App.Action.Contact.onExportVcard);
 
         // init address book switcher
         _.node['addressBookInputs'] = App.queryAll('.oneline input');
@@ -76,8 +77,13 @@ if(App.namespace) { App.namespace('Action.Sidebar', function(App) {
             App.Action.List.refreshList();
         });
 
-
     }
+
+
+
+
+
+
 
     return _;
 

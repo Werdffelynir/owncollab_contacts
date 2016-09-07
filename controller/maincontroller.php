@@ -193,7 +193,7 @@ class MainController extends Controller
         header("Content-type: text/directory");
         header("Content-Disposition: attachment; filename=contacts.vcf");
         header("Pragma: public");
-        exit($this->connect->users()->vCardGenerate());
+        //exit($this->connect->users()->vCardGenerate());
     }
 
     /**
@@ -203,7 +203,7 @@ class MainController extends Controller
      */
     public function publicgetvcard()
     {
-        exit($this->connect->users()->vCardGenerate());
+        //exit($this->connect->users()->vCardGenerate());
     }
 
 }

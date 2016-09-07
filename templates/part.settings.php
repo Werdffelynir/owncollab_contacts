@@ -24,12 +24,12 @@ $contacts = !empty($_['contacts']) ? $_['contacts'] : [];
         <h4>&nbsp;</h4>
 
 		<div class="download_button">
-			<a href="<?=$url?>/getvcard" target="_blank" class="icon-download">Export contacts</a>
+			<div id="export_vcard" class="icon-download">Export contacts</div>
 		</div>
 
-		<h4><label for="webdavurl">Remote</label></h4>
+        <!--			<a href="--><?//=$url?><!--/getvcard" target="_blank" class="icon-download">Export contacts</a>-->
+<!--		<h4><label for="webdavurl">Remote</label></h4>
+		<input id="webdavurl" readonly="readonly" value="<?/*=$url*/?>/vcard" type="text">-->
 
-		<input id="webdavurl" readonly="readonly" value="<?=$url?>/vcard" type="text">
-		<br>
 	</div>
 </div>
