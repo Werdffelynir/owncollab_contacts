@@ -190,10 +190,103 @@ class MainController extends Controller
      */
     public function getvcard()
     {
+        $contacts = Helper::post('contacts', false);
+        $contactsData = [];
+
+        try {
+            $contactsData = json_decode($contacts, true);
+        } catch (\Exception $e) {}
+
+        $fields = [];
+        foreach ($contactsData as $contact) {
+            $fields[] = $contact['fields'];
+        }
+
+        $data = $this->vCardGenerate($fields);
+
         header("Content-type: text/directory");
         header("Content-Disposition: attachment; filename=contacts.vcf");
         header("Pragma: public");
+        //var_dump($contactsData, $data);
+        exit($data);
         //exit($this->connect->users()->vCardGenerate());
+    }
+
+    public function vCardGenerate($fields)
+    {
+        $result = '';
+        foreach($fields as $field) {
+
+            $vcard = new vCard();
+            $first_name = '';
+            $last_name = '';
+/*
+array (size=10)
+  0 =>
+    array (size=5)
+      'id_contact' => string '65' (length=2)
+      'uid' => string 'admin' (length=5)
+      'fields' =>
+        array (size=14)
+          'display_name' => string 'Sim Sorrow' (length=10)
+          'department' => string '' (length=0)
+          'company' => string '' (length=0)
+          'work_country' => string '' (length=0)
+          'work_city' => string '' (length=0)
+          'office_tel' => string '' (length=0)
+          'work_address' => string 'Address 888' (length=11)
+          'home_tel' => string '' (length=0)
+          'home_address' => string '' (length=0)
+          'birthday' => string '' (length=0)
+          more elements...
+      'is_private' => string '1' (length=1)
+      'groupname' => string 'My Work' (length=7)
+
+        'display_name' => 'Name',
+        'department' => 'Group',
+        'company' => 'Company',
+        'work_country' => 'Country',
+        'work_city' => 'City',
+        'office_tel' => 'Phone',
+        'work_address' => 'Address',
+        'home_tel' => 'Home Phone',
+        'home_address' => 'Home Address',
+        'birthday' => 'Birthday',
+        'email1' => 'Email',
+        'email2' => 'Email 2',
+        'note' => 'Notes',
+        'url' => 'Website',
+*/
+            if($display_name_array = explode(' ', $field['display_name']) AND $display_name_array >= 2) {
+                $first_name = array_shift($display_name_array);
+                $last_name = join(' ', $display_name_array);
+            }else{
+                $first_name = $field['display_name'];
+            }
+
+            $vcard->set('data', [
+                'display_name' => $field['display_name'],
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'department' => $field['department'],
+                'company' => $field['company'],
+                'work_country' => $field['work_country'],
+                'work_city' => $field['work_city'],
+                'work_address' => $field['work_address'],
+                'office_tel' => $field['office_tel'],
+                'home_tel' => $field['home_tel'],
+                'home_address' => $field['home_address'],
+                'birthday' => $field['birthday'],
+                'email1' => $field['email1'],
+                'email2' => $field['email2'],
+                'note' => $field['note'],
+                'url' => $field['url'],
+            ]);
+
+            $result .= $vcard->show();
+        }
+
+        return $result;
     }
 
     /**

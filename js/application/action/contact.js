@@ -400,7 +400,37 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
      * @param event
      */
     _.onExportVcard = function (event) {
+        //console.log('onExportVcard fieldsTemplate >>> ', _.fieldsTemplate);
+        //console.log('onExportVcard activeAddressBook >>> ', App.Action.List.activeAddressBook);
 
+        var bookName, groupName, contacts = [], saveData = [];
+
+        if( Util.isIterated(App.Action.List.activeAddressBook) )
+        {
+            for (bookName in App.Action.List.activeAddressBook)
+            {
+                if(!App.Action.List.activeAddressBook[bookName])
+                    continue;
+
+                contacts = App.Action.List.activeAddressBook[bookName].contacts;
+
+                for (groupName in contacts) {
+                    saveData = Util.arrMerge(saveData, contacts[groupName]);
+                }
+            }
+        }
+
+        if(saveData.length > 0) {
+            var form = Util.createElement('form', {action: '/index.php/apps/owncollab_contacts/getvcard', method: 'POST'});
+            var input = Util.createElement('input', {type:'text', name:'contacts'});
+            input.value = JSON.stringify(saveData);
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.style.display = 'none';
+            form.submit();
+        }
+
+        console.log('onExportVcard saveData >>> ', saveData);
     };
 
     /**
