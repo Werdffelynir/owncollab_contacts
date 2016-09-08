@@ -29,5 +29,7 @@ $application->registerRoutes($this, ['routes' => [
     ['name' => 'api#savegroup', 'url' => '/savegroup', 'verb' => 'POST'],
     ['name' => 'api#index', 'url' => '/api', 'verb' => 'POST'],
 
+    ['name' => 'main#test', 'url' => '/test', 'verb' => 'GET'],
+
 ]]);
 

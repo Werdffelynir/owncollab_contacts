@@ -24,6 +24,41 @@ class Helper
         else return false;
     }
 
+
+
+    /**
+     * Check current the application is running.
+     * If $name return bool if current application equivalent
+     * If $name missing return current application name
+     *
+     * @param $name
+     * @return array|null|bool
+     */
+    static public function isApp($name = null) {
+        $uri = \OC::$server->getRequest()->getRequestUri();
+        $start = strpos($uri, '/apps/') + 6;
+        $app = substr($uri, $start);
+
+        if (strpos($app, '/'))
+            $app = substr($app, 0, strpos($app, '/'));
+
+        if($name)
+            return $app == $name;
+
+        return $app;
+    }
+
+
+    /**
+     * Check current the application is setting.
+     * @return bool
+     */
+    static public function isAppSettingsUsers() {
+        return strpos(\OC::$server->getRequest()->getRequestUri(), '/settings/users') !== false;
+    }
+
+
+
     /**
      * Current URI address path
      * @param $appName
@@ -299,6 +334,25 @@ class Helper
 
         return $res;
     }
+
+
+    /**
+     * @param $data_string
+     * @param string $file_path
+     */
+    static public function appLoger($data_string, $file_path = 'applog.log')
+    {
+        $path =  \OC_App::getAppPath('owncollab_contacts') . '/' . $file_path;
+
+        if(is_file($path) AND !is_writable($path))
+            chmod($path, 0777);
+
+        $data = "\n" . date("Y.m.d H:i:s") . ": " .trim($data_string);
+        file_put_contents($path, $data, FILE_APPEND);
+    }
+
+
+
 
 
     /**

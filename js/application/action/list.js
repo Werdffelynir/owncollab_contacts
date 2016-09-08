@@ -184,6 +184,8 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
             is_private = t.getAttribute('data-is-private'),
             is_project = t.getAttribute('data-is-project');
 
+        App.Action.Contact.close();
+
         if(id_group == 'all')
             _.fiterFor = {id_book: null, id_group: null};
         else {

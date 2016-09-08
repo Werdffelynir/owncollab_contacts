@@ -76,11 +76,26 @@ class Addressgroups
         $PDOStatement = $this->connect->db->executeQuery($sql, [
             ':id_book' => $id_book,
             ':name' => $name,
-            ':is_private' => $is_private,
+            ':is_private' => $is_private?1:0,
         ]);
 
         return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
     }
+
+    public function getOneByName($name)
+    {
+        $result = $this->connect->select('*', $this->tableName, 'name = ?', [$name]);
+        return $result ? $result[0] : null;
+    }
+
+
+
+    public function removeGroup($id_book, $gid)
+    {
+        $result = $this->connect->delete($this->tableName, 'id_book = ? AND name = ?', [$id_book, $gid]);
+        return $result;
+    }
+
 
 
 }

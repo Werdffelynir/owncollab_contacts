@@ -207,9 +207,7 @@ class MainController extends Controller
         header("Content-type: text/directory");
         header("Content-Disposition: attachment; filename=contacts.vcf");
         header("Pragma: public");
-        //var_dump($contactsData, $data);
         exit($data);
-        //exit($this->connect->users()->vCardGenerate());
     }
 
     public function vCardGenerate($fields)
@@ -220,43 +218,7 @@ class MainController extends Controller
             $vcard = new vCard();
             $first_name = '';
             $last_name = '';
-/*
-array (size=10)
-  0 =>
-    array (size=5)
-      'id_contact' => string '65' (length=2)
-      'uid' => string 'admin' (length=5)
-      'fields' =>
-        array (size=14)
-          'display_name' => string 'Sim Sorrow' (length=10)
-          'department' => string '' (length=0)
-          'company' => string '' (length=0)
-          'work_country' => string '' (length=0)
-          'work_city' => string '' (length=0)
-          'office_tel' => string '' (length=0)
-          'work_address' => string 'Address 888' (length=11)
-          'home_tel' => string '' (length=0)
-          'home_address' => string '' (length=0)
-          'birthday' => string '' (length=0)
-          more elements...
-      'is_private' => string '1' (length=1)
-      'groupname' => string 'My Work' (length=7)
 
-        'display_name' => 'Name',
-        'department' => 'Group',
-        'company' => 'Company',
-        'work_country' => 'Country',
-        'work_city' => 'City',
-        'office_tel' => 'Phone',
-        'work_address' => 'Address',
-        'home_tel' => 'Home Phone',
-        'home_address' => 'Home Address',
-        'birthday' => 'Birthday',
-        'email1' => 'Email',
-        'email2' => 'Email 2',
-        'note' => 'Notes',
-        'url' => 'Website',
-*/
             if($display_name_array = explode(' ', $field['display_name']) AND $display_name_array >= 2) {
                 $first_name = array_shift($display_name_array);
                 $last_name = join(' ', $display_name_array);
@@ -297,6 +259,30 @@ array (size=10)
     public function publicgetvcard()
     {
         //exit($this->connect->users()->vCardGenerate());
+    }
+
+
+
+
+    /**
+     * @PublicPage
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function test()
+    {
+
+        $userManager  = \OC::$server->getUserManager();
+        $userSession  = \OC::$server->getUserSession();
+        $groupManager = \OC::$server->getGroupManager();
+        //$userManager->userExists()
+        //$userManager->search('admin')
+        //$userManager->search('admin')['admin']->getDisplayName()
+        //var_dump($userSession->getUser()->getAvatarImage(100));
+        //var_dump($userSession->login());
+        //$groupManager->search(''))
+        var_dump($userManager->search('vasia'));
+        exit;
     }
 
 }

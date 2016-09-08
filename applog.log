@@ -1,0 +1,82 @@
+
+2016.09.08 15:36:00: initTriggers
+2016.09.08 15:36:00: Event: Remove-User-From-Group {"uid":"aaade3","gid":"developers"}
+2016.09.08 15:36:01: Event: Delete-User; user: [{"id_rel_contact":"76","id_group":"31","id_contact":"81"}]
+2016.09.08 15:36:07: initTriggers
+2016.09.08 15:45:41: initTriggers
+2016.09.08 15:45:41: Event: Remove-User-From-Group {"uid":"aaade4","gid":"developers"}
+2016.09.08 15:46:41: initTriggers
+2016.09.08 15:46:44: initTriggers
+2016.09.08 15:46:44: Event: Remove-User-From-Group {"uid":"aaade5","gid":"developers"}
+2016.09.08 15:46:44: Event: Delete-User: aaade5
+2016.09.08 15:46:46: initTriggers
+2016.09.08 15:46:46: initTriggers
+2016.09.08 15:46:47: initTriggers
+2016.09.08 15:46:48: initTriggers
+2016.09.08 15:49:06: initTriggers
+2016.09.08 15:49:07: initTriggers
+2016.09.08 15:49:07: initTriggers
+2016.09.08 15:49:17: initTriggers
+2016.09.08 15:49:21: initTriggers
+2016.09.08 15:49:21: Event: Remove-User-From-Group {"uid":"aaade6","gid":"developers"}
+2016.09.08 15:49:23: initTriggers
+2016.09.08 15:49:24: initTriggers
+2016.09.08 15:50:02: initTriggers
+2016.09.08 15:50:08: initTriggers
+2016.09.08 15:50:08: Event: Remove-User-From-Group {"uid":"asda123","gid":"developers"}
+2016.09.08 15:50:09: initTriggers
+2016.09.08 15:50:10: initTriggers
+2016.09.08 15:50:10: initTriggers
+2016.09.08 15:51:36: initTriggers
+2016.09.08 15:51:37: Event: Create-User; user: asd
+2016.09.08 15:51:37: Event: Add-User-To-Group ["asd","developers",null,{}]
+2016.09.08 15:51:37: Event: changeUser: {"user":"asd","feature":"eMailAddress","value":"asda@asd.fgy"}
+2016.09.08 15:52:19: initTriggers
+2016.09.08 15:52:20: initTriggers
+2016.09.08 15:52:20: Event: Remove-User-From-Group {"uid":"asdasd33","gid":"managers"}
+2016.09.08 15:52:27: initTriggers
+2016.09.08 15:52:27: Event: Remove-User-From-Group {"uid":"asdf41","gid":"developers"}
+2016.09.08 15:53:35: initTriggers
+2016.09.08 15:53:51: initTriggers
+2016.09.08 15:53:57: initTriggers
+2016.09.08 15:54:00: initTriggers
+2016.09.08 15:54:00: initTriggers
+2016.09.08 15:54:02: initTriggers
+2016.09.08 15:54:04: initTriggers
+2016.09.08 15:54:22: initTriggers
+2016.09.08 15:54:22: Event: Remove-User-From-Group {"uid":"asd","gid":"developers"}
+2016.09.08 15:55:02: initTriggers
+2016.09.08 15:55:03: Event: Create-User; user: asdasd1212
+2016.09.08 15:55:03: Event: Add-User-To-Group ["asdasd1212","developers",null,{}]
+2016.09.08 15:55:03: Event: changeUser: {"user":"asdasd1212","feature":"eMailAddress","value":"asdasd1212@adw.awd"}
+2016.09.08 15:55:08: initTriggers
+2016.09.08 15:55:23: initTriggers
+2016.09.08 15:55:24: Event: Create-User; user: asdasd1213
+2016.09.08 15:55:24: Event: Add-User-To-Group ["asdasd1213","developers",null,{}]
+2016.09.08 15:55:24: Event: changeUser: {"user":"asdasd1213","feature":"eMailAddress","value":"asdasd1213@adw.awd"}
+2016.09.08 15:55:38: initTriggers
+2016.09.08 15:55:38: Event: Create-User; user: asdasd1214
+2016.09.08 15:55:38: Event: Add-User-To-Group ["asdasd1214","developers",null,{}]
+2016.09.08 15:55:39: Event: changeUser: {"user":"asdasd1214","feature":"eMailAddress","value":"asdasd1213@adw.awd"}
+2016.09.08 15:55:57: initTriggers
+2016.09.08 15:55:58: initTriggers
+2016.09.08 15:55:59: initTriggers
+2016.09.08 15:56:09: initTriggers
+2016.09.08 15:56:16: initTriggers
+2016.09.08 15:56:16: Event: Remove-User-From-Group {"uid":"asdasd1212","gid":"developers"}
+2016.09.08 15:56:17: Event: Delete-User: asdasd1212 Error:
+2016.09.08 15:56:17: initTriggers
+2016.09.08 15:56:18: initTriggers
+2016.09.08 15:56:18: initTriggers
+2016.09.08 15:56:48: initTriggers
+2016.09.08 15:56:49: Event: Remove-User-From-Group {"uid":"asdasd1213","gid":"developers"}
+2016.09.08 16:02:42: initTriggers
+2016.09.08 16:02:43: initTriggers
+2016.09.08 16:02:44: initTriggers
+2016.09.08 16:02:56: initTriggers
+2016.09.08 16:02:57: Event: Remove-User-From-Group {"uid":"asdasd1214","gid":"developers"}
+2016.09.08 16:02:57: Event: Delete-User: asdasd1214 Error:
+2016.09.08 16:03:26: initTriggers
+2016.09.08 16:03:27: Event: Create-User; user: aas12
+2016.09.08 16:03:27: Event: Add-User-To-Group ["aas12","managers",null,{}]
+2016.09.08 16:03:27: Event: changeUser: {"user":"aas12","feature":"eMailAddress","value":"aas12@efef.wef"}

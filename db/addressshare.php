@@ -63,7 +63,7 @@ class AddressShare
             ':id_book' => $id_book,
             ':uid_owner' => $uid_owner,
             ':uid_with' => $uid_with,
-            ':is_private' => $is_private,
+            ':is_private' => $is_private?1:0,
         ]);
     }
 

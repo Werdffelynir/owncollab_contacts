@@ -11,6 +11,8 @@
 
 namespace OCA\Owncollab_Contacts\AppInfo;
 
+use OCA\Owncollab_Contacts\AddressBookHandler;
+use OCA\Owncollab_Contacts\Db\Connect;
 use OCA\Owncollab_Contacts\Helper;
 use OCP\AppFramework\App;
 use OCP\Util;
@@ -51,4 +53,21 @@ if(Helper::isAppPage($appName)) {
 	Util::addStyle($appName, 'common');
 	Util::addScript($appName, 'libs/ns.application');
 	Util::addScript($appName, 'application/init');
+}
+
+/**
+ * A listen the events "create new users" and "create new group"
+ */
+function initTriggers(){
+    static $abh = null;
+
+    if($abh === null) {
+        Helper::appLoger('initTriggers');
+        $connect = new Connect(Helper::getConnection());
+        $abh = new AddressBookHandler($connect);
+        $abh->enableTriggers();
+    }
+}
+if( Helper::isAppSettingsUsers()) {
+    initTriggers();
 }

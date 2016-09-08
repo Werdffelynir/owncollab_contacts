@@ -58,11 +58,6 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
     /**
      * book, contact, uid
      * @namespace App.Action.Contact.display
-     * @param book
-     * @param contact
-     */
-    /**
-     *
      * @param uid
      * @param nameBook
      * @param nameGroup
@@ -148,6 +143,9 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
         }
     };
 
+    /**
+     * @namespace App.Action.Contact.close
+     */
     _.close = function() {
         var contentBox = App.Controller.Page.node['contentBox'],
             contentWrapper = App.Controller.Page.node['contentWrapper'];
@@ -400,8 +398,6 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
      * @param event
      */
     _.onExportVcard = function (event) {
-        //console.log('onExportVcard fieldsTemplate >>> ', _.fieldsTemplate);
-        //console.log('onExportVcard activeAddressBook >>> ', App.Action.List.activeAddressBook);
 
         var bookName, groupName, contacts = [], saveData = [];
 
@@ -430,7 +426,6 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
             form.submit();
         }
 
-        console.log('onExportVcard saveData >>> ', saveData);
     };
 
     /**

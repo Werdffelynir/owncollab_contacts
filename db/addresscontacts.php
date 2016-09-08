@@ -109,6 +109,17 @@ class Addresscontacts
         return $result ? $result[0] : null;
     }
 
+    public function getOneByUid($uid)
+    {
+        $result = $this->connect->select('*', $this->tableName, 'uid = ?', [$uid]);
+        return $result ? $result[0] : null;
+    }
+
+    public function getAllByUid($uid)
+    {
+        return $this->connect->select('*', $this->tableName, 'uid = ?', [$uid]);
+    }
+
     /**
      * Обновляет поля одного контакта
      * @param $contactId
@@ -132,6 +143,34 @@ class Addresscontacts
         return $this->tableName;
     }
 
+
+    public function removeByUidWithRelations($uid)
+    {
+        $rel_ids = [];
+        $rel = $this->connect->addressRelContacts()->getAllByUid($uid);
+        if($rel) {
+            for ($i = 0; $i > count($rel); $i++) {
+                $rel_ids[] = $rel[$i]['id_rel_contact'];
+            }
+        }
+
+        $this->connect->db->beginTransaction();
+
+        $this->connect->delete($this->tableName, 'uid = ?', [$uid]);
+        $this->connect->addressRelContacts()->removeAllIn($rel_ids);
+
+        $this->connect->db->commit();
+
+        return $this->connect->db->errorInfo()[2];
+    }
+
+
+/*    public function removeProjectContactWithRelations($uid)
+    {
+        $pcBook = $this->connect->addressbook()->getProjectContactBook();
+        return $this->tableName;
+    }*/
+
     /**
      * @param $uid
      * @param $fields
@@ -148,11 +187,35 @@ class Addresscontacts
         $PDOStatement = $this->connect->db->executeQuery($sql, [
             ':uid' => $uid,
             ':fields' => json_encode($fields),
-            ':is_private' => $is_private,
+            ':is_private' => $is_private?1:0,
         ]);
 
         return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
     }
+
+
+/*    public function getContactsByUid($uid)
+    {
+        $sql = "SELECT *
+                FROM *PREFIX*collab_addresscontacts c
+                LEFT JOIN *PREFIX*collab_address_rel_contacts r ON (r.id_contact = c.id_contact)
+                LEFT JOIN *PREFIX*collab_addressgroups g ON (g.id_group = r.id_group)
+                LEFT JOIN *PREFIX*collab_addressbook b ON (b.id_book = g.id_book)
+                WHERE c.uid = ? ";
+
+        return $this->connect->queryAll($sql, [$uid]);
+    }*/
+
+
+
+
+
+
+
+
+
+
+
 
     public function getContactsByAddressbook($id_book, $format = false)
     {
@@ -161,6 +224,7 @@ class Addresscontacts
                     LEFT JOIN *PREFIX*collab_address_rel_contacts r ON (r.id_contact = c.id_contact)
                     LEFT JOIN *PREFIX*collab_addressgroups g ON (g.id_group = r.id_group)
                     WHERE g.id_book = ?";
+
         $result =  $this->connect->queryAll($sql, [$id_book]);
 
         if($format && $result) {

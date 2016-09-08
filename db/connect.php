@@ -98,9 +98,10 @@ class Connect
 
     /**
      * Quick update record
-     * @param $table
-     * @param $where
-     * @param null $bind
+     * @param string $table
+     * @param array $columnData
+     * @param string $where
+     * @param array $bind
      * @return \Doctrine\DBAL\Driver\Statement
      */
     public function update($table, array $columnData, $where, $bind=null) {

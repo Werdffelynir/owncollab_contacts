@@ -62,6 +62,15 @@ class Addressbook
     }
 
     /**
+     * @return mixed
+     */
+    public function getProjectContactBook()
+    {
+        $result = $this->connect->select('*', $this->tableName, 'is_project = 1');
+        return $result ? $result[0] : null;
+    }
+
+    /**
      * @param $name
      * @param $uid
      * @param $is_project
@@ -77,7 +86,7 @@ class Addressbook
             ':name' => $name,
             ':uid' => $uid,
             ':is_project' => $is_project,
-            ':is_private' => $is_private,
+            ':is_private' => $is_private?1:0,
         ]);
 
         return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;

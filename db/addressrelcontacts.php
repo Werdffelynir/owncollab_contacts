@@ -49,6 +49,34 @@ class AddressRelContacts
     {
 
     }
+    public function getAllByUid($uid)
+    {
+        $sql = "SELECT r.*
+                FROM *PREFIX*collab_address_rel_contacts r
+                LEFT JOIN *PREFIX*collab_addresscontacts c ON (c.id_contact = r.id_contact)
+                WHERE c.uid = ?";
+
+        return $this->connect->queryAll($sql, [$uid]);
+    }
+
+    public function removeAllIn($ids)
+    {
+        if(!empty($ids)) {
+            $idsString = join(', ', $ids);
+            return $this->connect->delete($this->tableName, 'id_rel_contact IN ('.$idsString.')');
+        }
+    }
+
+
+    public function getAllByContactId()
+    {
+
+    }
+
+    public function getAllByGroupId()
+    {
+
+    }
 
     /**
      * @return mixed
