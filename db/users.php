@@ -48,6 +48,47 @@ class Users
 
 
 
+
+    /** users for create - contacts
+     * @return mixed
+     */
+    public function pcGetUsers()
+    {
+        $sql = "SELECT u.*, gu.gid, p.configvalue as email
+                FROM *PREFIX*users u
+                LEFT JOIN *PREFIX*group_user gu ON (gu.uid = u.uid)
+                LEFT JOIN *PREFIX*preferences p ON ( p.userid = u.uid AND p.appid = 'settings' AND p.configkey = 'email')";
+        return $this->connect->queryAll($sql);
+    }
+
+    /** users in group for create - contacts
+     * @return mixed
+     */
+    public function pcGetGroupUser()
+    {
+        $sql = "SELECT * FROM *PREFIX*group_user";
+        return $this->connect->queryAll($sql);
+    }
+
+    /**groups for create - contacts
+     * @return mixed
+     */
+    public function pcGetGroups()
+    {
+        $sql = "SELECT * FROM *PREFIX*groups";
+        return $this->connect->queryAll($sql);
+    }
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Retrieve all records from Users
      *

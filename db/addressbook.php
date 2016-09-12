@@ -29,6 +29,7 @@ class Addressbook
         'id_book',
         'name',
         'uid',
+        'last_update',
         'is_project',
         'is_private',
     ];

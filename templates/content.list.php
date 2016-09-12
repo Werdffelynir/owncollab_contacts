@@ -5,6 +5,7 @@
 
 //$projectUsers = !empty($_['projectUsers']) && is_array($_['projectUsers']) ? $_['projectUsers'] : [];
 //$editableClass = ($_['isAdmin']) ? 'contacteditable' : '';
+
 $data = [
     'menu' => 'begin',
     'content' => 'list',
@@ -31,13 +32,13 @@ $data = [
 
     <div id="list_contacts"></div>
 
-    <div class="tbl ul_item" data-uid="">
+<!--    <div class="tbl ul_item" data-uid="">
         <div class="tbl_cell " data-key="displayname">&nbsp;</div>
         <div class="tbl_cell " data-key="email">&nbsp;</div>
         <div class="tbl_cell " data-key="office_tel">&nbsp;</div>
         <div class="tbl_cell " data-key="address">&nbsp;</div>
         <div class="tbl_cell"><strong>&nbsp;</strong></div>
-    </div>
+    </div>-->
 
 </div>
 

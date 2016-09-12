@@ -89,7 +89,7 @@ class ApiController extends Controller {
         if($contact) {
             try {
                 $contact['fields'] = json_decode($contact['fields'], true);
-            }catch(\Exception $e){}
+            } catch (\Exception $e) {}
         }
 
         $html = Helper::renderPartial($this->appName, 'tpl.contact', [

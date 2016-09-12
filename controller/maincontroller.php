@@ -67,8 +67,13 @@ class MainController extends Controller
      */
     public function index()
     {
-        if(!$this->addressBookHandler->getProjectContacts()) {
+        $projectContacts = $this->addressBookHandler->getProjectContacts();
+        if(!$projectContacts) {
             $this->addressBookHandler->createProjectContacts();
+        }
+        else if ($projectContacts['book']['last_update'] >= 0 ) {
+            // time() + (60 * 5)
+            $this->addressBookHandler->updateProjectContacts($projectContacts);
         }
 
         if(!$this->addressBookHandler->getAllCustomAddressBooks($this->userId)) {
@@ -90,6 +95,7 @@ class MainController extends Controller
         $contacts = [];
         $customBooks = $this->addressBookHandler->getAllCustomAddressBooks($this->userId);
         $projectContacts = $this->addressBookHandler->getProjectContacts();
+
         foreach($customBooks as $book) {
             $contacts[$book['id_book']] = $this->addressBookHandler->getContactsByAddressBook($book['id_book']);
         }

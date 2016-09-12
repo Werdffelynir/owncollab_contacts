@@ -2,6 +2,7 @@ CREATE TABLE `oc_collab_addressbook` (
   `id_book` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `uid` varchar(45) NOT NULL,
+  `last_update` int(11) DEFAULT '0',
   `is_project` int(11) DEFAULT '0',
   `is_private` int(11) DEFAULT '1',
   PRIMARY KEY (`id_book`)

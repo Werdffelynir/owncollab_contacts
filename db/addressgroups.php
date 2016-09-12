@@ -53,6 +53,28 @@ class Addressgroups
     }
 
     /**
+     * @param $id_group
+     * @return null
+     */
+    public function getOneById($id_group)
+    {
+        $result = $this->connect->select('*', $this->tableName, 'id_group = ?', [$id_group]);
+        return $result ? $result[0] : null;
+    }
+
+    /**
+     * @param $name
+     * @return null
+     */
+    public function getOneByName($name)
+    {
+        $result = $this->connect->select('*', $this->tableName, 'name = ?', [$name]);
+        return $result ? $result[0] : null;
+    }
+
+
+
+    /**
      * @return mixed
      */
     public function getTableName()
@@ -82,12 +104,6 @@ class Addressgroups
         return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
     }
 
-    public function getOneByName($name)
-    {
-        $result = $this->connect->select('*', $this->tableName, 'name = ?', [$name]);
-        return $result ? $result[0] : null;
-    }
-
 
 
     public function removeGroup($id_book, $gid)
@@ -97,5 +113,53 @@ class Addressgroups
     }
 
 
+    public function removeGroupByName($id_book, $gid)
+    {
+        $result = $this->connect->delete($this->tableName, 'id_book = ? AND name = ?', [$id_book, $gid]);
+        return $result;
+    }
+
+
+    /**
+     * @param $gid
+     * @param string $withoutGroupName
+     * @return \Doctrine\DBAL\Driver\Statement|null
+     */
+    public function removeGroupAndReplaceUsersTo($gid, $withoutGroupName = 'Without Group')
+    {
+        $result = null;
+
+        $group = $this->getOneByName($gid);
+        $groupWithout = $this->getOneByName($withoutGroupName);
+
+        $this->connect->update('*PREFIX*collab_address_rel_contacts',
+            ['id_group' => $groupWithout['id_group']],
+            'id_group = ?', [$group['id_group']]
+        );
+        $result = $this->connect->delete($this->tableName, 'id_group = ?', [$group['id_group']]);
+
+        return $result;
+    }
+
+
+    /**
+     * @param $gidFrom
+     * @param $gidTo
+     * @return \Doctrine\DBAL\Driver\Statement|null
+     */
+    public function replaceContactToGroup($gidFrom, $gidTo)
+    {
+        $result = null;
+
+        $groupFrom = $this->getOneByName($gidFrom);
+        $groupTo = $this->getOneByName($gidTo);
+
+        $result = $this->connect->update('*PREFIX*collab_address_rel_contacts',
+            ['id_group' => $groupTo['id_group']],
+            'id_group = ?', [$groupFrom['id_group']]
+        );
+
+        return $result;
+    }
 
 }

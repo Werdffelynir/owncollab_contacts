@@ -33,46 +33,73 @@ class AddressBookHandler
     }
 
 
+    /**
+     * Create data for ProjectContacts
+     */
     public function createProjectContacts()
     {
         $addressBookName = 'Project Contacts';
-        $groupsUsers = $this->connect->users()->getGroupsUsersList();
-        $ungroupsUsers = $this->connect->users()->getUngroupUsers();
-        $deniedUsers = ['collab_user'];
+        $addressBookNameOwner = 'collab_user';
+        $withoutGroupName = 'Without Group';
+        $pcUsers = $this->connect->users()->pcGetUsers();
+        $pcGroupUser = $this->connect->users()->pcGetGroupUser();
+        $pcGroups = $this->connect->users()->pcGetGroups();
+        $pcGroups[] = ['gid' => $withoutGroupName];
 
         $this->connect->db->beginTransaction();
-        $bookId = $this->connect->addressbook()->create($addressBookName, 'admin', 1, 0);
+
+        $bookId = $this->connect->addressbook()->create($addressBookName, $addressBookNameOwner, 1, 0);
         if($bookId){
-            // Create addresses for users with group
-            foreach($groupsUsers as $group => $users){
-                // Create group name = $group
-                $groupId = $this->connect->addressgroups()->create($bookId, $group, 0);
-                foreach($users as $user) {
-                    // Disable an denied users
-                    if(in_array($user['uid'], $deniedUsers)) continue;
-                    // Create user contact for $group
-                    $fields = ['email1' => $user['email'], 'display_name' => $user['displayname']];
-                    $contactId = $this->connect->addresscontacts()->create($user['uid'], $fields, 0);
-                    $this->connect->addressRelContacts()->create($groupId, $contactId);
+
+            $relationContacts = [];
+            $relationGroups = [];
+            $relationWithoutGroups = [];
+
+            foreach($pcUsers as $user) {
+
+                if (in_array($user['uid'], $relationContacts))
+                    continue;
+
+                $fields = [
+                    'email1' => $user['email'],
+                    'display_name' => $user['displayname'] ? $user['displayname'] : $user['uid']
+                ];
+
+                $id_contact = $this->connect->addresscontacts()->create($user['uid'], $fields, 0);
+                $relationContacts[$user['uid']] = $id_contact;
+
+                if(!$user['gid']) {
+                    $relationWithoutGroups[$user['uid']] = $id_contact;
                 }
             }
 
-            // Create addresses for users without group
-            if($ungroupsUsers) {
-                $groupId = $this->connect->addressgroups()->create($bookId, 'without_group', 0);
-                foreach($ungroupsUsers as $user){
-                    // Disable an denied users
-                    if(in_array($user['uid'], $deniedUsers)) continue;
-                    // Create user contact for $group
-                    $fields = ['email1' => $user['email'], 'display_name' => $user['displayname']];
-                    $contactId = $this->connect->addresscontacts()->create($user['uid'], $fields, 0);
-                    $this->connect->addressRelContacts()->create($groupId, $contactId);
-                }
+            foreach($pcGroups as $group) {
+                $id_group = $this->connect->addressgroups()->create($bookId, $group['gid'], 0);
+                $relationGroups[$group['gid']] = $id_group;
             }
+
+            foreach($pcGroupUser as $gu) {
+                $id_group = $relationGroups[$gu['gid']];
+                $id_contact = $relationContacts[$gu['uid']];
+                $this->connect->addressRelContacts()->create($id_group, $id_contact);
+            }
+
+            foreach($relationWithoutGroups as $id_contact) {
+                $this->connect->addressRelContacts()->create($relationGroups[$withoutGroupName], $id_contact);
+            }
+
         }
+
+        //exit;
         $this->connect->db->commit();
     }
 
+    /**
+     * Create data for Private Contacts
+     * @param $uid
+     * @param bool $addressBookName
+     * @param array $defaultGroups
+     */
     public function createPrivateContacts($uid, $addressBookName = false, array $defaultGroups = [])
     {
         $addressBookName = $addressBookName ? $addressBookName : 'Contacts';
@@ -89,7 +116,10 @@ class AddressBookHandler
         $this->connect->db->commit();
     }
 
-
+    /**
+     * Get records of ProjectContacts
+     * @return bool|array|null
+     */
     public function getProjectContacts()
     {
         $addressBook = $this->connect->select('*', $this->connect->addressbook()->getTableName(),
@@ -102,7 +132,6 @@ class AddressBookHandler
                 'id_book = ?', [$data['book']['id_book']]);
 
             $data['contacts'] = $this->connect->addresscontacts()->getContactsByAddressbook($data['book']['id_book'], true);
-            //
 
             return $data;
         }
@@ -110,12 +139,19 @@ class AddressBookHandler
         return false;
     }
 
+
+    /**
+     * Get records of AddressBook $id_book
+     * @param $id_book
+     * @return bool|array|null
+     */
     public function getContactsByAddressBook($id_book)
     {
         $addressBook = $this->connect->select('*', $this->connect->addressbook()->getTableName(),
             'id_book = ?', [$id_book]);
 
         if($addressBook) {
+
             $data['book'] = $addressBook[0];
 
             $data['groups'] = $this->connect->select('*', $this->connect->addressgroups()->getTableName(),
@@ -129,6 +165,11 @@ class AddressBookHandler
         return false;
     }
 
+    /**
+     * Get all Custom "Private" AddressBooks
+     * @param $uid
+     * @return mixed
+     */
     public function getAllCustomAddressBooks($uid)
     {
         $data = $this->connect->select('*', $this->connect->addressbook()->getTableName(),
@@ -137,21 +178,118 @@ class AddressBookHandler
         return $data;
     }
 
-    /**
-     * Streams the vcard to the browser client.
-     */
-    public function download()
+
+    public function updateProjectContacts($projectContacts)
     {
+        $addressBookId = $projectContacts['book']['id_book'];
+        $addressBookName = 'Project Contacts';
+        $addressBookNameOwner = 'collab_user';
+        $withoutGroupName = 'Without Group';
+
+        $pcUsers = $this->connect->users()->pcGetUsers();
+        $pcGroups = $this->connect->users()->pcGetGroups();
+        $pcGroupUser = $this->connect->users()->pcGetGroupUser();
+        $pcGroups[] = ['gid' => $withoutGroupName];
+
+        $oldGroups = $this->connect->select('*', $this->connect->addressgroups()->getTableName(),
+            'id_book = ?', [$addressBookId]);
+
+        $oldContacts = $this->connect->addresscontacts()->getContactsByAddressbook($addressBookId);
+
+        $oldArrGroups  = array_map(function($item){ return $item['name'];}, $oldGroups);
+        $pcArrGroups = array_map(function($item){ return $item['gid'];}, $pcGroups);
+
+        $this->connect->db->beginTransaction();
+
+        // удаленные группы
+        if ($removed = array_diff($oldArrGroups, $pcArrGroups)) {
+            // удалить группу & перенести всех пользователей в группу без-группы
+            foreach ($removed as $gName) {
+                $this->connect->addressgroups()->removeGroupAndReplaceUsersTo($gName, $withoutGroupName);
+            }
+        }
+
+        //  добавленные группы
+        if ($added = array_diff($pcArrGroups, $oldArrGroups)) {
+            foreach ($added as $gName) {
+                $this->connect->addressgroups()->create($addressBookId, $gName, 0);
+            }
+        }
+
+        // check and update contacts
+        foreach ($pcUsers as $user) {
+            $this->checkedUpdateContactUser($user, $projectContacts);
+        }
+
+        //var_dump($pcUsers);
+        //var_dump($oldContacts);
+
+        //exit;
+        $this->connect->db->commit();
 
     }
 
+
     /**
-     * Show the vcard.
+     * @param $user
+     * @param $projectContacts
      */
-    public function show()
+    public function checkedUpdateContactUser($user, $projectContacts)
     {
+        $withoutGroupName = 'Without Group';
+        $addressBookId = $projectContacts['book']['id_book'];
+        $userContacts = $this->connect->addresscontacts()->getAllGroupsForUserProjectContacts($user['uid']);
+
+        // ...
+
+        /*
+        // New Contact
+        if(empty($userContacts)) {
+
+            $group = $this->connect->addressgroups()->getOneByName($user['gid']);
+            $fields = [
+                'email1' => $user['email'],
+                'display_name' => $user['displayname'] ? $user['displayname'] : $user['uid']
+            ];
+            if ($group) {
+                $id_contact = $this->connect->addresscontacts()->create($user['uid'], $fields, 0);
+                $this->connect->addressRelContacts()->create($group['id_group'], $id_contact);
+            }
+
+        } else {
+
+            if (count($userContacts) == 1) {
+                if ($userContacts[0]['name'] !== $user['gid']) {
+                    if ($user['gid'] == null && $userContacts[0]['name'] != $withoutGroupName) {
+                        $this->connect->addressgroups()->replaceContactToGroup($userContacts[0]['name'], $withoutGroupName);
+                    } else {
+                        $this->connect->addressgroups()->replaceContactToGroup($userContacts[0]['name'], $user['gid']);
+                    }
+                }
+            }
+            else {
+
+                $hasContact = false;
+                foreach ($userContacts as $uc) {
+                    if ($uc['name'] == $user['gid']) {
+                        $hasContact = $userContacts;
+                    }
+                }
+
+                if (!$hasContact) {
+                    $group = $this->connect->addressgroups()->getOneByName($user['gid']);
+                    if ($group)
+                        $this->connect->addressRelContacts()->create($group['id_group'], $hasContact['id_contact']);
+                    else {
+                        $group = $this->connect->addressgroups()->create($addressBookId, $user['gid'], 0);
+                        $this->connect->addressRelContacts()->create($group['id_group'], $hasContact['id_contact']);
+                    }
+                }
+            }
+        }*/
 
     }
+
 
     /** @var  \OC\User\Manager $userManager */
     private $userManager;
@@ -162,6 +300,9 @@ class AddressBookHandler
     /** @var  \OC\User\Session $userSession */
     private $userSession;
 
+    /**
+     * enable Triggers for Listen
+     */
     public function enableTriggers()
     {
         $this->userManager  = \OC::$server->getUserManager();
@@ -172,10 +313,9 @@ class AddressBookHandler
         $this->triggersListeners();
     }
 
-/**function($gid){
-Helper::appLoger('postCreate $gid: '. $gid->getGID());
-//\OC_Hook::emit('OC_User', 'post_createGroup', array('gid' => $gid->getGID()));
-}*/
+    /**
+     * Listener
+     */
     public function triggersListeners()
     {
         $userSession = $this->userSession;
@@ -215,8 +355,8 @@ Helper::appLoger('postCreate $gid: '. $gid->getGID());
             'display_name' => ucfirst($uid),
             'email1' => $uEmail,
         ], false);
-        $this->connect->db->commit();
-        */
+        $this->connect->db->commit();*/
+
 
         Helper::appLoger('Event: Create-User; user: ' . $uid);
     }
@@ -231,7 +371,7 @@ Helper::appLoger('postCreate $gid: '. $gid->getGID());
         // remove contact
         $error = null;
         $uid = $user->getUID();
-        $error = $this->connect->addresscontacts()->removeByUidWithRelations($uid);
+        //$error = $this->connect->addresscontacts()->removeByUidWithRelations($uid);
         Helper::appLoger('Event: Delete-User: '.$uid. ' Error: '.$error);
     }
 
@@ -243,6 +383,7 @@ Helper::appLoger('postCreate $gid: '. $gid->getGID());
     public function onCreateGroup(\OC\Group\Group $group)
     {
         $gid = $group->getGID();
+
         $pcBook = $this->connect->addressbook()->getProjectContactBook();
         $this->connect->addressgroups()->create($pcBook['id_book'], $gid, false);
 
@@ -255,8 +396,11 @@ Helper::appLoger('postCreate $gid: '. $gid->getGID());
     public function onDeleteGroup(\OC\Group\Group $group)
     {
         $gid = $group->getGID();
-        $pcBook = $this->connect->addressbook()->getProjectContactBook();
-        $this->connect->addressgroups()->removeGroup($pcBook['id_book'], $gid);
+        $withoutGroupName = 'Without Group';
+
+        //$pcBook = $this->connect->addressbook()->getProjectContactBook();
+        //$this->connect->addressgroups()->removeGroup($pcBook['id_book'], $gid);
+        $this->connect->addressgroups()->removeGroupAndReplaceUsersTo($gid, $withoutGroupName);
 
         Helper::appLoger('Event: Delete-Group; Group: '.$gid);
     }
@@ -271,7 +415,7 @@ Helper::appLoger('postCreate $gid: '. $gid->getGID());
     {
         $uid = $user->getUID();
         $gid = $group->getGID();
-        $email1 = $user->getEMailAddress();
+        /*$email1 = $user->getEMailAddress();
 
         $userContact = $this->connect->addresscontacts()->getOneByUid($uid);
         $contactGroup = $this->connect->addressgroups()->getOneByName($gid);
@@ -301,6 +445,7 @@ Helper::appLoger('postCreate $gid: '. $gid->getGID());
 
 
         Helper::appLoger('Event: Add-User-To-Group '.json_encode([$uid, $gid, $email1, $user]));
+        */
     }
     /**
      * Удаление пользоватея, он состоит в группе

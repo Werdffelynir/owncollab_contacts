@@ -121,6 +121,22 @@ class Addresscontacts
     }
 
     /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getAllGroupsForUserProjectContacts($uid)
+    {
+        $sql = "SELECT *
+                FROM *PREFIX*collab_addressgroups g
+                LEFT JOIN *PREFIX*collab_address_rel_contacts r ON (r.id_group = g.id_group)
+                LEFT JOIN *PREFIX*collab_addresscontacts c ON (c.id_contact = r.id_contact)
+                WHERE c.uid = ?";
+
+        return $this->connect->queryAll($sql, [$uid]);
+    }
+
+
+    /**
      * Обновляет поля одного контакта
      * @param $contactId
      * @param $fields
@@ -219,7 +235,10 @@ class Addresscontacts
 
     public function getContactsByAddressbook($id_book, $format = false)
     {
-        $sql = "SELECT c.*, g.name as groupname
+        $sql = "SELECT
+                      c.*,
+                      r.id_rel_contact,
+                      g.name as groupname
                     FROM *PREFIX*collab_addresscontacts c
                     LEFT JOIN *PREFIX*collab_address_rel_contacts r ON (r.id_contact = c.id_contact)
                     LEFT JOIN *PREFIX*collab_addressgroups g ON (g.id_group = r.id_group)

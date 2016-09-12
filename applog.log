@@ -80,3 +80,94 @@
 2016.09.08 16:03:27: Event: Create-User; user: aas12
 2016.09.08 16:03:27: Event: Add-User-To-Group ["aas12","managers",null,{}]
 2016.09.08 16:03:27: Event: changeUser: {"user":"aas12","feature":"eMailAddress","value":"aas12@efef.wef"}
+2016.09.12 11:17:41: initTriggers
+2016.09.12 11:17:42: initTriggers
+2016.09.12 11:17:43: initTriggers
+2016.09.12 11:18:11: initTriggers
+2016.09.12 11:18:12: Event: Create-User; user: aaluar
+2016.09.12 11:18:12: Event: Create-Group; Group: aura
+2016.09.12 11:18:12: Event: changeUser: {"user":"aaluar","feature":"eMailAddress","value":"aaluar@i.oas"}
+2016.09.12 11:18:17: initTriggers
+2016.09.12 11:18:20: initTriggers
+2016.09.12 11:19:11: initTriggers
+2016.09.12 11:19:13: initTriggers
+2016.09.12 11:19:13: initTriggers
+2016.09.12 12:13:07: initTriggers
+2016.09.12 12:13:07: Event: Create-User; user: aaaz1
+2016.09.12 12:13:14: initTriggers
+2016.09.12 12:13:15: Event: Create-User; user: aaaz2
+2016.09.12 12:13:22: initTriggers
+2016.09.12 12:13:24: initTriggers
+2016.09.12 14:04:27: initTriggers
+2016.09.12 14:04:27: initTriggers
+2016.09.12 14:04:30: initTriggers
+2016.09.12 14:04:32: initTriggers
+2016.09.12 14:04:32: initTriggers
+2016.09.12 14:17:23: initTriggers
+2016.09.12 14:17:25: initTriggers
+2016.09.12 14:17:26: initTriggers
+2016.09.12 14:17:26: initTriggers
+2016.09.12 14:19:10: initTriggers
+2016.09.12 14:19:11: initTriggers
+2016.09.12 14:19:11: initTriggers
+2016.09.12 14:33:04: initTriggers
+2016.09.12 14:33:05: Event: Create-User; user: asdasd
+2016.09.12 15:00:52: initTriggers
+2016.09.12 15:01:47: initTriggers
+2016.09.12 15:01:47: Event: Remove-User-From-Group {"uid":"aas12","gid":"managers"}
+2016.09.12 15:01:48: Event: Delete-User: aas12 Error:
+2016.09.12 15:01:49: initTriggers
+2016.09.12 15:01:49: Event: Delete-User: aaluar Error:
+2016.09.12 15:01:50: initTriggers
+2016.09.12 15:01:50: Event: Remove-User-From-Group {"uid":"aaaz2","gid":"developers"}
+2016.09.12 15:01:51: Event: Delete-User: aaaz2 Error:
+2016.09.12 15:01:53: initTriggers
+2016.09.12 15:01:54: Event: Remove-User-From-Group {"uid":"aaaz1","gid":"aura"}
+2016.09.12 15:01:54: Event: Delete-User: aaaz1 Error:
+2016.09.12 15:01:55: initTriggers
+2016.09.12 15:02:01: initTriggers
+2016.09.12 15:02:01: Event: Remove-User-From-Group {"uid":"asdasd","gid":"aura"}
+2016.09.12 15:02:01: Event: Delete-User: asdasd Error:
+2016.09.12 15:10:13: initTriggers
+2016.09.12 15:10:14: initTriggers
+2016.09.12 15:10:14: initTriggers
+2016.09.12 15:10:17: initTriggers
+2016.09.12 15:10:21: initTriggers
+2016.09.12 15:10:30: initTriggers
+2016.09.12 15:10:30: Event: Create-User; user: aaaq1
+2016.09.12 15:10:55: initTriggers
+2016.09.12 15:10:55: Event: Remove-User-From-Group {"uid":"aaaq1","gid":"aura"}
+2016.09.12 15:10:55: Event: Delete-User: aaaq1 Error:
+2016.09.12 15:11:24: initTriggers
+2016.09.12 15:11:25: initTriggers
+2016.09.12 15:11:25: initTriggers
+2016.09.12 15:11:31: initTriggers
+2016.09.12 15:11:32: initTriggers
+2016.09.12 15:11:34: initTriggers
+2016.09.12 15:11:39: initTriggers
+2016.09.12 15:11:39: Event: Delete-Group; Group: aura
+2016.09.12 15:12:19: initTriggers
+2016.09.12 15:12:20: Event: Create-User; user: aaaae1
+2016.09.12 15:12:23: initTriggers
+2016.09.12 15:12:24: initTriggers
+2016.09.12 15:12:24: initTriggers
+2016.09.12 15:12:44: initTriggers
+2016.09.12 15:12:45: initTriggers
+2016.09.12 15:12:46: initTriggers
+2016.09.12 15:12:49: initTriggers
+2016.09.12 15:16:01: initTriggers
+2016.09.12 15:16:01: Event: Create-User; user: aaae2
+2016.09.12 15:16:16: initTriggers
+2016.09.12 15:16:17: initTriggers
+2016.09.12 15:17:04: initTriggers
+2016.09.12 15:17:04: Event: Remove-User-From-Group {"uid":"aaaae1","gid":"developers"}
+2016.09.12 15:17:04: Event: Remove-User-From-Group {"uid":"aaaae1","gid":"managers"}
+2016.09.12 15:17:04: Event: Delete-User: aaaae1 Error:
+2016.09.12 15:17:12: initTriggers
+2016.09.12 15:17:12: Event: Remove-User-From-Group {"uid":"aaae2","gid":"developers"}
+2016.09.12 15:17:12: Event: Delete-User: aaae2 Error:
+2016.09.12 15:17:13: initTriggers
+2016.09.12 15:17:15: initTriggers
+2016.09.12 15:17:53: initTriggers
+2016.09.12 15:17:55: initTriggers
+2016.09.12 15:17:55: initTriggers
