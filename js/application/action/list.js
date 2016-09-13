@@ -97,7 +97,7 @@ if(App.namespace) { App.namespace('Action.List', function(App) {
     };
 
     _.cleanValue = function(value) {
-        return value ? value : '';
+        return value && (value != 'null' || value != 'false') ? value : '';
     };
     /**
      * @namespace App.Action.List.refreshList
