@@ -138,6 +138,7 @@ class ApiController extends Controller {
         $id_book = $data['id_book'];
         $id_group = $data['id_group'];
         $id_contact = $data['id_contact'];
+        $id_rel_contact = $data['id_rel_contact'];
         $fieldsSource = $data['fields'];
         $fields = [];
 
@@ -160,15 +161,53 @@ class ApiController extends Controller {
                 $this->connect->db->commit();
             }
             else if(is_numeric($id_contact)){
+
                 // Update contact
+                $this->connect->db->beginTransaction();
+
                 $fields = json_encode($fields);
                 $update_id = (int) $this->connect->addresscontacts()->updateContactFields($id_contact, $fields);
+
+                $rel = $this->connect->addressRelContacts()->getOneById($id_rel_contact);
+                if ($rel['id_group'] != $id_group) {
+                    $this->connect->addressRelContacts()->removeById($id_rel_contact);
+                    $this->connect->addressRelContacts()->create($id_group, $id_contact);
+                }
+
+                $this->connect->db->commit();
+
                 $requestData['update_id'] = $update_id;
 
             }
         }
 
         $requestData['fields'] = $fields;
+        return new DataResponse($requestData);
+    }
+
+
+
+    public function deletecontact($data)
+    {
+        //name_group id_book
+        $requestData = [
+            'id_book' =>  $data['id_book'],
+            'id_contact' => $data['id_contact'],
+            'id_rel_contact' => $data['id_rel_contact'],
+            'result' => null,
+            'error' => null,
+            'error_info' => null,
+        ];
+
+        $this->connect->db->beginTransaction();
+        $result = $this->connect->addresscontacts()->removeById($requestData['id_contact']);
+        if (!$result)
+            $this->connect->addressRelContacts()->removeById($requestData['id_rel_contact']);
+        else
+            $requestData['result'] = $result;
+
+        $this->connect->db->commit();
+
         return new DataResponse($requestData);
     }
 

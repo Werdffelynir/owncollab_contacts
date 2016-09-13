@@ -41,7 +41,11 @@ class AddressRelContacts
         $this->tableName = $tableName;
     }
 
-
+    public function getOneById($id_rel_contact)
+    {
+        $result = $this->connect->select('*', $this->tableName, 'id_rel_contact = ?', [$id_rel_contact]);
+        return $result ? $result[0] : null;
+    }
     /**
      * @return mixed
      */
@@ -59,7 +63,7 @@ class AddressRelContacts
         return $this->connect->queryAll($sql, [$uid]);
     }
 
-    public function removeAllIn($ids)
+    public function removeAllIn(array $ids)
     {
         if(!empty($ids)) {
             $idsString = join(', ', $ids);
@@ -103,5 +107,16 @@ class AddressRelContacts
 
         return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
     }
+
+    /**
+     * @param $id_rel_contact
+     * @return mixed
+     */
+    public function removeById($id_rel_contact)
+    {
+        $this->connect->delete($this->tableName, 'id_rel_contact = ?', [$id_rel_contact]);
+        return $this->connect->db->errorInfo()[2];
+    }
+
 
 }

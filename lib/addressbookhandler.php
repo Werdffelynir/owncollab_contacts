@@ -216,19 +216,27 @@ class AddressBookHandler
             }
         }
 
-        // check and update contacts
+        // Part 1, check and update contacts
         foreach ($pcUsers as $user) {
             $this->checkedUpdateContactUser($user, $projectContacts);
         }
+        // Part 2, check and update contacts, multi groups
+       foreach ($this->multiGroups as $uid => $multiData) {
+           // delete user
+           if (!empty($multiData)) {
+               $id_rel_contact = array_values($multiData)[0]['id_rel_contact'];
+               $this->connect->addressRelContacts()->removeAllIn([$id_rel_contact]);
+           }
+        }
 
-        //var_dump($pcUsers);
-        //var_dump($oldContacts);
+        $this->connect->addressbook()->setLastUpdate($addressBookId);
 
         //exit;
         $this->connect->db->commit();
 
     }
 
+    private $multiGroups = [];
 
     /**
      * @param $user
@@ -240,12 +248,8 @@ class AddressBookHandler
         $addressBookId = $projectContacts['book']['id_book'];
         $userContacts = $this->connect->addresscontacts()->getAllGroupsForUserProjectContacts($user['uid']);
 
-        // ...
-
-        /*
         // New Contact
         if(empty($userContacts)) {
-
             $group = $this->connect->addressgroups()->getOneByName($user['gid']);
             $fields = [
                 'email1' => $user['email'],
@@ -255,38 +259,36 @@ class AddressBookHandler
                 $id_contact = $this->connect->addresscontacts()->create($user['uid'], $fields, 0);
                 $this->connect->addressRelContacts()->create($group['id_group'], $id_contact);
             }
+        }
 
-        } else {
-
-            if (count($userContacts) == 1) {
-                if ($userContacts[0]['name'] !== $user['gid']) {
-                    if ($user['gid'] == null && $userContacts[0]['name'] != $withoutGroupName) {
-                        $this->connect->addressgroups()->replaceContactToGroup($userContacts[0]['name'], $withoutGroupName);
-                    } else {
-                        $this->connect->addressgroups()->replaceContactToGroup($userContacts[0]['name'], $user['gid']);
-                    }
-                }
-            }
-            else {
-
-                $hasContact = false;
-                foreach ($userContacts as $uc) {
-                    if ($uc['name'] == $user['gid']) {
-                        $hasContact = $userContacts;
-                    }
-                }
-
-                if (!$hasContact) {
+        // update or create
+        else if (count($userContacts) == 1) {
+            if ($userContacts[0]['name'] !== $user['gid']) {
+                if ($user['gid'] == null && $userContacts[0]['name'] != $withoutGroupName) {
+                    $this->connect->addressgroups()->replaceContactToGroup($userContacts[0]['name'], $withoutGroupName);
+                }else if ($user['gid']){
+                    // Add user to group
                     $group = $this->connect->addressgroups()->getOneByName($user['gid']);
-                    if ($group)
-                        $this->connect->addressRelContacts()->create($group['id_group'], $hasContact['id_contact']);
-                    else {
-                        $group = $this->connect->addressgroups()->create($addressBookId, $user['gid'], 0);
-                        $this->connect->addressRelContacts()->create($group['id_group'], $hasContact['id_contact']);
+                    $this->connect->addressRelContacts()->create($group['id_group'], $userContacts[0]['id_contact']);
+                }
+            }
+        }
+        // множество групп
+        else if (count($userContacts) > 1) {
+
+            if (!isset($this->multiGroups[$user['uid']])) {
+                $this->multiGroups[$user['uid']] = $userContacts;
+            }
+
+            if (isset($this->multiGroups[$user['uid']])) {
+                foreach ($this->multiGroups[$user['uid']] as $index => $multiData) {
+                    if ($user['gid'] == $multiData['name']) {
+                        unset($this->multiGroups[$user['uid']][$index]);
                     }
                 }
             }
-        }*/
+
+        }
 
     }
 

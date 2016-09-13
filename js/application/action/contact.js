@@ -12,6 +12,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
         currentIdGroup:null,
         currentGroupName:null,
         currentContactId:null,
+        currentRelContactId:null,
         fieldsTemplate:{}
     };
 
@@ -62,8 +63,9 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
      * @param nameBook
      * @param nameGroup
      * @param idContact
+     * @param idRelContact
      */
-    _.display = function(uid, nameBook, nameGroup, idContact) {
+    _.display = function(uid, nameBook, nameGroup, idContact, idRelContact) {
 
         var contentBox = App.Controller.Page.node['contentBox'],
             contentWrapper = App.Controller.Page.node['contentWrapper'],
@@ -73,7 +75,13 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
         contentBox.style.display = 'block';
         contentBox.appendChild(loader);
 
-        App.Action.Api.request('getcontact',function(data){
+        _.currentBookName = nameBook;
+        _.currentContactId = idContact;
+        _.currentRelContactId = idRelContact;
+
+        console.log(idContact, idRelContact);
+
+        App.Action.Api.request('getcontact',function(data) {
             contentBox.innerHTML = data;
 
             _.initAfterLoaded();
@@ -212,6 +220,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                     id_book: id_book,
                     id_group: id_group,
                     id_contact: Util.isNum(id_contact) ? id_contact : '',
+                    id_rel_contact: _.currentRelContactId,
                     is_private: true
                 };
 
@@ -252,6 +261,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                             is_private: 1,
                             uid: response['uid']
                         };
+                        if (!contacts[groupName]) contacts[groupName] = [];
                         contacts[groupName].push(contactData);
 
                     }
@@ -263,7 +273,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                             for (g in contacts){
                                 if(Util.isArr(contacts[g])) {
                                     for (i = 0; i < contacts[g].length; i ++) {
-                                        if(contacts[g][i]['id_contact'] === id_contact) {
+                                        if(contacts[g] && contacts[g][i] && contacts[g][i]['id_contact'] === id_contact) {
                                             Util.objMergeOnlyExists(contacts[g][i]['fields'], fields);
                                         }
                                     }
@@ -328,9 +338,32 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
     };
 
 
-
+    /**
+     * Delete contact real
+     */
     _.actionDelete = function() {
-        console.log('actionDelete');
+        if (_.currentBookName != 'project_contacts') {
+            OC.dialogs.confirm("DELETE CONTACT",'Confirm delete this contact', function(result){
+                if (!!result) {
+                    App.Action.Api.request('deletecontact',function(data){
+
+                        var book = App.provide.contacts[_.currentBookName];
+                        var i, contacts = book.contacts[_.currentGroupName];
+
+                        for (i = 0; i < contacts.length; i ++) {
+                            if (contacts[i] && contacts[i]['id_contact'] == _.currentContactId) {
+                                delete contacts[i];
+                            }
+                        }
+
+                        _.close();
+                        App.Action.List.refreshList();
+
+                    },{id_book: _.currentBookName, id_contact: _.currentContactId, id_rel_contact: _.currentRelContactId});
+                }
+            }, true)
+        }
+        //
     };
 
     /**

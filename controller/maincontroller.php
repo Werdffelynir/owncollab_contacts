@@ -71,8 +71,8 @@ class MainController extends Controller
         if(!$projectContacts) {
             $this->addressBookHandler->createProjectContacts();
         }
-        else if ($projectContacts['book']['last_update'] >= 0 ) {
-            // time() + (60 * 5)
+        else if ($projectContacts['book']['last_update'] <  time() - (60 * 5) ) {
+            //exit('Time Update!');
             $this->addressBookHandler->updateProjectContacts($projectContacts);
         }
 

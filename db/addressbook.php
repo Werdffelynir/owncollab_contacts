@@ -93,6 +93,10 @@ class Addressbook
         return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
     }
 
+    public function setLastUpdate ($addressBookId)
+    {
+        return $this->connect->update($this->tableName, ['last_update' =>  time()], 'is_project = 1 AND id_book = ?', [$addressBookId]);
+    }
 
 
 

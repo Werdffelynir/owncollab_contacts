@@ -130,7 +130,7 @@ class Addresscontacts
                 FROM *PREFIX*collab_addressgroups g
                 LEFT JOIN *PREFIX*collab_address_rel_contacts r ON (r.id_group = g.id_group)
                 LEFT JOIN *PREFIX*collab_addresscontacts c ON (c.id_contact = r.id_contact)
-                WHERE c.uid = ?";
+                WHERE c.uid = ? AND c.is_private = 0";
 
         return $this->connect->queryAll($sql, [$uid]);
     }
@@ -159,7 +159,20 @@ class Addresscontacts
         return $this->tableName;
     }
 
+    /**
+     * @param $id_contact
+     * @return mixed
+     */
+    public function removeById($id_contact)
+    {
+        $this->connect->delete($this->tableName, 'id_contact = ?', [$id_contact]);
+        return $this->connect->db->errorInfo()[2];
+    }
 
+    /**
+     * @param $uid
+     * @return mixed
+     */
     public function removeByUidWithRelations($uid)
     {
         $rel_ids = [];
