@@ -169,7 +169,7 @@ class ApiController extends Controller {
                 $update_id = (int) $this->connect->addresscontacts()->updateContactFields($id_contact, $fields);
 
                 $rel = $this->connect->addressRelContacts()->getOneById($id_rel_contact);
-                if ($rel['id_group'] != $id_group) {
+                if ($is_private && $rel['id_group'] != $id_group) {
                     $this->connect->addressRelContacts()->removeById($id_rel_contact);
                     $this->connect->addressRelContacts()->create($id_group, $id_contact);
                 }
@@ -239,7 +239,7 @@ class ApiController extends Controller {
 
 
 
-
+/*
     public function addcontacts($data)
     {
         $params = [
@@ -291,6 +291,6 @@ class ApiController extends Controller {
 
         return new DataResponse($params);
     }
-
+*/
 
 }

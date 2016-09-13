@@ -261,7 +261,10 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                             is_private: 1,
                             uid: response['uid']
                         };
-                        if (!contacts[groupName]) contacts[groupName] = [];
+                        //todo: опа, косяк
+                        if (!contacts[groupName])
+                            contacts[groupName] = [];
+
                         contacts[groupName].push(contactData);
 
                     }
@@ -282,7 +285,7 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
                             //App.Action.List.activeAddressBook[id_book] = App.provide.contacts[id_book];
                         }
                     }
-
+                    _.close();
                     App.Action.List.refreshList();
 
                 }, sendData);
