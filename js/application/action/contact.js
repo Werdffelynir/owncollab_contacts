@@ -79,8 +79,6 @@ if(App.namespace) { App.namespace('Action.Contact', function(App) {
         _.currentContactId = idContact;
         _.currentRelContactId = idRelContact;
 
-        console.log(idContact, idRelContact);
-
         App.Action.Api.request('getcontact',function(data) {
             contentBox.innerHTML = data;
 
