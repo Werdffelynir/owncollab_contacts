@@ -1,12 +1,15 @@
 <?php
-    namespace OCA\Owncollab_Contacts\AppInfo;
+
+namespace OCA\Owncollab_Contacts\AppInfo;
 
     //ini_set('display_errors', 1);
 
+use OCA\DAV\CardDAV\CardDavBackend;
 use \OCA\Owncollab_Contacts\Helper;
 use OCA\Owncollab_Contacts\Controller\ApiController;
 use OCA\Owncollab_Contacts\Controller\MainController;
 use OCA\Owncollab_Contacts\Db\Connect;
+use OCA\DAV\Connector\Sabre\Principal;
 use \OCP\AppFramework\App;
 use \OCP\AppFramework\IAppContainer;
 use \OCP\IContainer;
@@ -58,6 +61,18 @@ class Application extends App {
         });
 
 
+        $container->registerService('CardDavBackend', function($c) {
+            /** @var IAppContainer $c */
+            $db = $c->getServer()->getDatabaseConnection();
+            $dispatcher = $c->getServer()->getEventDispatcher();
+            $principal = new Principal(
+                $c->getServer()->getUserManager(),
+                $c->getServer()->getGroupManager()
+            );
+            return new CardDavBackend($db, $principal, $dispatcher);
+        });
+
+
         /**
          * Controllers
          */
@@ -82,22 +97,10 @@ class Application extends App {
                 $c->query('UserId'),
                 $c->query('isAdmin'),
                 $c->query('L10N'),
-                $c->query('Connect')
+                $c->query('Connect'),
+                $c->query('CardDavBackend')
             );
         });
-
-        /*
-        $container->registerService('ContactsApiController', function (IAppContainer $c) use ($appName) {
-            return new ContactsApiController(
-                $c->query('AppName'),
-                $c->query('Request'),
-                $c->query('UserId'),
-                $c->query('isAdmin'),
-                $c->query('L10N'),
-                $c->query('Connect')
-            );
-        });*/
-
 
     }
 

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: olexiy
- * Date: 10.02.16
- * Time: 14:49
- */
 
 namespace OCA\Owncollab_Contacts\Db;
-
 
 
 class Addressbook
@@ -17,22 +10,12 @@ class Addressbook
      */
     private $connect;
 
-
     /**
-     * Table: oc_collab_addressbook
-     * @var string
+     * oc_addressbooks
+     * @var
      */
     private $tableName;
 
-    /** @var string $fields table fields name in database */
-    private $fields = [
-        'id_book',
-        'name',
-        'uid',
-        'last_update',
-        'is_project',
-        'is_private',
-    ];
 
     /**
      * Users constructor.
@@ -47,55 +30,20 @@ class Addressbook
 
 
     /**
-     * @return mixed
-     */
-    public function getAll()
-    {
-
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTableName()
-    {
-        return $this->tableName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProjectContactBook()
-    {
-        $result = $this->connect->select('*', $this->tableName, 'is_project = 1');
-        return $result ? $result[0] : null;
-    }
-
-    /**
-     * @param $name
+     * Simple checked record of project contacts book, and insert it if need
+     * @param $addressBookId
      * @param $uid
-     * @param $is_project
-     * @param $is_private
-     * @return mixed
+     * @return int
      */
-    public function create($name, $uid, $is_project = false, $is_private = true)
+    public function shareProjectContact($addressBookId, $uid)
     {
-        $sql = "INSERT INTO $this->tableName (`name`, `uid`, `is_project`, `is_private`)
-                VALUES (:name, :uid, :is_project, :is_private)";
-
-        $PDOStatement = $this->connect->db->executeQuery($sql, [
-            ':name' => $name,
-            ':uid' => $uid,
-            ':is_project' => $is_project,
-            ':is_private' => $is_private?1:0,
+        $result = $this->connect->db->insertIfNotExist('*PREFIX*dav_shares', [
+            'principaluri' => "principals/users/$uid",
+            'type' => "addressbook",
+            'access' => 2,
+            'resourceid' => $addressBookId,
         ]);
-
-        return $PDOStatement ? $this->connect->db->lastInsertId($this->tableName) : false;
-    }
-
-    public function setLastUpdate ($addressBookId)
-    {
-        return $this->connect->update($this->tableName, ['last_update' =>  time()], 'is_project = 1 AND id_book = ?', [$addressBookId]);
+        return $result;
     }
 
 
