@@ -141,6 +141,7 @@ class ProjectBook
             foreach ($users as $user) {
                 if ($user['uid'] == $this->fakeUser)
                     continue;
+
                 $this->updateCard($projectBook['id'], $user['uid']);
             }
 
@@ -163,7 +164,9 @@ class ProjectBook
         else {
             $vCard = Reader::read($card['carddata']);
             $needsUpdate = $this->converterUser->updateCard($vCard, $user);
+
             //var_dump('Needs Update: ' . ($needsUpdate ? 'Yes':'No'));
+            //$this->cardDavBackend->updateCard($addressBookId, $cardId, )
 
             if ($needsUpdate) {
                 $this->cardDavBackend->deleteCard($addressBookId, $cardId);

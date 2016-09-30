@@ -18,16 +18,16 @@ use OCP\AppFramework\App;
 use OCP\Util;
 
 
-$appName = 'owncollab_contacts';
-$app = new App($appName);
-$container = $app->getContainer();
+//$appName = 'owncollab_contacts';
+//$app = new App($appName);
+//$container = $app->getContainer();
 
 
 if (\OC::$server->getUserManager()->search('collab_user')) {
 
     /**
      * Navigation menu settings
-     */
+
     $container->query('OCP\INavigationManager')->add(function () use ($container, $appName) {
         $urlGenerator = $container->query('OCP\IURLGenerator');
         $l10n = \OC::$server->getL10N($appName);
@@ -40,7 +40,7 @@ if (\OC::$server->getUserManager()->search('collab_user')) {
             'name' => $l10n->t('Contacts')
         ];
     });
-
+     */
 
     /**
      * Loading translations
