@@ -135,7 +135,7 @@ class ProjectBook
 
             // 0. not exist (contact) - insert      +
             // 1. not exist (user) - delete         -
-            // 2. change - update/delete-insert     +
+            // 2. change - update                   +
             // 3. no change - no action             +
 
             foreach ($users as $user) {
@@ -165,12 +165,16 @@ class ProjectBook
             $vCard = Reader::read($card['carddata']);
             $needsUpdate = $this->converterUser->updateCard($vCard, $user);
 
-            //var_dump('Needs Update: ' . ($needsUpdate ? 'Yes':'No'));
-            //$this->cardDavBackend->updateCard($addressBookId, $cardId, )
-
             if ($needsUpdate) {
-                $this->cardDavBackend->deleteCard($addressBookId, $cardId);
-                $this->insertCard($addressBookId, $uid);
+                $groups = \OC::$server->getGroupManager()->getUserGroups($user);
+                if ($groups) {
+                    foreach ($groups as $groupName=>$groupInfo) {
+                        $vCard->add(new Text($vCard, 'CATEGORIES', $groupName));
+                    }
+                }
+                $this->cardDavBackend->updateCard($addressBookId, $cardId, $vCard->serialize());
+//                $this->cardDavBackend->deleteCard($addressBookId, $cardId);
+//                $this->insertCard($addressBookId, $uid);
             }
         }
     }
