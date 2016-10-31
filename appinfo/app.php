@@ -16,9 +16,11 @@ use OCA\Owncollab_Contacts\Helper;
 use OCA\Owncollab_Contacts\ProjectBook;
 use OCA\Owncollab_Talks\Configurator;
 
-if (\OC::$server->getUserManager()->search('collab_user')) {
 
-    if( Helper::isApp('contacts')) {
+if (\OC::$server->getUserManager()->search('collab_user'))
+{
+
+    if( Helper::isApp('contacts') && \OC_App::isEnabled('owncollab_chart')) {
 
         $user = \OC::$server->getUserSession()->getUser();
         $uid = ($user) ? $user->getUID() : false;
