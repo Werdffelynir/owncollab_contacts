@@ -25,7 +25,6 @@ class Helper
     }
 
 
-
     /**
      * Check current the application is running.
      * If $name return bool if current application equivalent
