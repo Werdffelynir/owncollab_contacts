@@ -44,16 +44,21 @@ if (\OC::$server->getUserManager()->search('collab_user'))
     }
 
 } else {
-    $configurator = new Configurator();
-    $user = $configurator->get('collab_user');
-    $userPassword = $configurator->get('collab_user_password');
 
-    # create user if not exist
-    if (!\OC_User::userExists($user)) {
-        $userManager = \OC::$server->getUserManager();
-        $userManager->createUser($user, $userPassword);
-        $user = new \OC\User\User($user, null);
-        $group =\OC::$server->getGroupManager()->get('admin');
-        $group->addUser($user);
+    if ( class_exists('Configurator') ) {
+
+        $configurator = new Configurator();
+        $user = $configurator->get('collab_user');
+        $userPassword = $configurator->get('collab_user_password');
+
+        # create user if not exist
+        if (!\OC_User::userExists($user)) {
+            $userManager = \OC::$server->getUserManager();
+            $userManager->createUser($user, $userPassword);
+            $user = new \OC\User\User($user, null);
+            $group =\OC::$server->getGroupManager()->get('admin');
+            $group->addUser($user);
+        }
     }
+
 }
